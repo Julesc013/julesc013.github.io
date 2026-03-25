@@ -24,22 +24,26 @@ html {
 body {
   margin: 0;
   padding: 12px;
+  min-height: 100vh;
+
   background-color: #008080;
-  background-image: url('bg_2560x1920.jpg');
+
+  background-image:
+    url('bg_2560x1920.jpg');
+
   background-repeat: no-repeat;
   background-position: center top;
-  background-size: cover;
+
+  /* KEY CHANGE */
+  background-size: 100% auto;
+
+  /* Prevent mobile weirdness */
   background-attachment: scroll;
+
   color: var(--text);
   font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
   font-size: 16px;
   line-height: 1.4;
-  min-height: 100vh;
-}
-
-.page {
-  width: min(100%, 760px);
-  margin: 0 auto;
 }
 
 .window {
