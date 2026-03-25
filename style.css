@@ -23,20 +23,11 @@ html {
 }
 
 body {
+body {
   margin: 0;
   padding: 12px;
   min-height: 100dvh;
-
   background-color: #008080;
-  background-image: url("bg_2560x1920.jpg");
-  background-repeat: no-repeat;
-  background-position: center top;
-
-  /* force image to match viewport exactly */
-  background-size: 100vw 100dvh;
-
-  background-attachment: scroll;
-
   color: var(--text);
   font-family: Tahoma, "MS Sans Serif", Geneva, sans-serif;
   font-size: 16px;
@@ -45,20 +36,15 @@ body {
 
 body::before {
   content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1000px;
+  position: fixed;
+  inset: 0;
   z-index: -1;
   pointer-events: none;
 
-  background-image:
-    linear-gradient(to bottom, rgba(0, 0, 0, 0) 60%, #008080 100%),
-    url("bg_2560x1920.jpg");
-  background-repeat: no-repeat, no-repeat;
-  background-position: center top, center top;
-  background-size: 100% 100%, 100% auto;
+  background-image: url("bg_2560x1920.jpg");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 100vw 100dvh;
 }
 
 .window {
