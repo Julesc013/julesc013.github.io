@@ -25,13 +25,18 @@ html {
 body {
   margin: 0;
   padding: 12px;
-  min-height: 100vh;
+  min-height: 100dvh;
+
   background-color: #008080;
   background-image: url("bg_2560x1920.jpg");
   background-repeat: no-repeat;
   background-position: center top;
-  background-size: 100% auto;
+
+  /* force image to match viewport exactly */
+  background-size: 100vw 100dvh;
+
   background-attachment: scroll;
+
   color: var(--text);
   font-family: Tahoma, "MS Sans Serif", Geneva, sans-serif;
   font-size: 16px;
