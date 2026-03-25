@@ -37,13 +37,16 @@ body {
 
 body::before {
   content: "";
-  position: fixed;
-  inset: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1000px;
   z-index: -1;
   pointer-events: none;
 
   background-image:
-    linear-gradient(to bottom, rgba(0, 0, 0, 0) 55%, #008080 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0) 60%, #008080 100%),
     url("bg_2560x1920.jpg");
   background-repeat: no-repeat, no-repeat;
   background-position: center top, center top;
