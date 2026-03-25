@@ -1,6 +1,6 @@
 :root {
   --bg: #008080;
-  --face: #c0c0c0;
+  --face: #d4d0c8; /* actual Win98-ish tone */
   --light: #ffffff;
   --mid: #808080;
   --dark: #404040;
@@ -68,7 +68,15 @@ body {
 }
 
 .window-body {
-  padding: 12px;
+  padding: 10px;
+
+  background: #d4d0c8;
+
+  /* INNER STRUCTURE */
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #808080;
+  border-bottom: 1px solid #808080;
 }
 
 p {
@@ -139,4 +147,15 @@ a:focus-visible,
 img {
   max-width: 100%;
   height: auto;
+}
+
+.content-area {
+  padding: 10px;
+  background: #ffffff;
+
+  /* sunken Win98 field */
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
 }
