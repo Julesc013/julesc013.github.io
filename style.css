@@ -1,6 +1,7 @@
 :root {
   --bg: #008080;
-  --face: #d4d0c8; /* actual Win98-ish tone */
+  --face: #d4d0c8;
+  --panel: #f4f4f4;
   --light: #ffffff;
   --mid: #808080;
   --dark: #404040;
@@ -25,10 +26,12 @@ body {
   margin: 0;
   padding: 12px;
   min-height: 100vh;
-  position: relative;
-
   background-color: #008080;
-
+  background-image: url("bg_2560x1920.jpg");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 100% auto;
+  background-attachment: scroll;
   color: var(--text);
   font-family: Tahoma, "MS Sans Serif", Geneva, sans-serif;
   font-size: 16px;
@@ -75,29 +78,23 @@ body::before {
 }
 
 .window-body {
-  padding: 10px;
-
-  background: #d4d0c8;
-
-  /* INNER STRUCTURE */
-  border-top: 1px solid #ffffff;
-  border-left: 1px solid #ffffff;
-  border-right: 1px solid #808080;
-  border-bottom: 1px solid #808080;
+  padding: 12px;
+  background: var(--face);
 }
 
+
 p {
-  margin: 0 0 12px;
-  max-width: 70ch;
+  margin: 0 0 16px;
+  max-width: 34em;
 }
 
 .link-list {
-  margin: 0 0 12px 0;
-  padding-left: 22px;
+  margin: 0 0 16px;
+  padding-left: 24px;
 }
 
 .link-list li {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
 }
 
 a {
@@ -130,39 +127,11 @@ a:focus-visible,
   top: 8px;
 }
 
-@media (max-width: 640px) {
-  body {
-    padding: 8px;
-    background-attachment: scroll;
-  }
-
-  .window-body {
-    padding: 10px;
-  }
-
-  .title-bar h1 {
-    font-size: 0.95rem;
-  }
-
-  p,
-  li,
-  a {
-    overflow-wrap: anywhere;
-  }
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
 .content-area {
-  padding: 10px;
-  background: #ffffff;
-
-  /* sunken Win98 field */
-  border-top: 2px solid #808080;
-  border-left: 2px solid #808080;
-  border-right: 2px solid #ffffff;
-  border-bottom: 2px solid #ffffff;
+  padding: 18px 20px;
+  background: var(--panel);
+  border-top: 2px solid var(--mid);
+  border-left: 2px solid var(--mid);
+  border-right: 2px solid var(--light);
+  border-bottom: 2px solid var(--light);
 }
