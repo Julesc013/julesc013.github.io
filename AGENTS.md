@@ -1,40 +1,50 @@
 # AGENTS.md
 
 ## Mission
-Maintain this repo as a static website that progressively evolves from:
-- v2: single desktop + single Notepad/TextEdit-style window
-- v3: fuller desktop/window manager shell
+Maintain this repository as a static website that evolves in controlled stages:
+- V1: extant single-page site
+- V2: one desktop surface plus one Notepad/TextEdit-style document window
+- V3+: fuller desktop/window-manager shell
 
 ## Non-negotiable rules
-- Preserve the user's written site copy unless explicitly instructed to rewrite text.
+- Preserve user-written site copy unless explicitly instructed to rewrite it.
+- Preserve no-JS readability. Content access must not depend on JavaScript.
+- Treat JavaScript as progressive enhancement, not as a hard dependency.
 - Prefer minimal diffs over rewrites.
 - Keep the site static-hostable on GitHub Pages.
-- Keep content readable without JavaScript.
-- Treat JavaScript as progressive enhancement, not a hard dependency.
+- Do not silently redesign the site or replace the established retro direction with a generic modern UI.
+- Maintain graceful degradation on old or limited browsers.
 - Do not introduce frameworks unless explicitly requested.
-- Do not replace the existing design direction with a modern generic design.
-- Maintain graceful degradation on old/limited browsers.
 
-## Architecture rules
+## Architecture principles
 - Separate content, shell, theme, and behavior.
-- One canonical DOM structure.
-- Themes are data/config where possible.
+- Keep one canonical DOM structure that can serve V1, V2, and V3+.
+- Use stable IDs for pages, apps, themes, and modes.
+- Use registries and schemas, not file paths, as the source of truth.
+- Keep source and generated output separate once a build layer exists.
 - Modes are orthogonal to themes.
-- Default v2 scope is: blank desktop + one main document app window.
+- V2 scope is one desktop surface and one main document app window only.
 
-## Browser/support policy
-- Baseline: readable with no JS.
-- Enhanced: theme switching and menus with JS.
-- Avoid relying on bleeding-edge CSS/JS as core behavior.
+## Workflow rules
+- Read `AGENTS.md` and all relevant files in `docs/` before making changes.
+- Produce a plan before major edits, restructures, or migrations.
+- Keep each PR focused on one concern when practical.
+- Keep commits atomic, descriptive, and easy to revert.
+- Do not silently change wording, information architecture, URLs, or deployment behavior.
+- Use short-lived `codex/*` branches for implementation work unless instructed otherwise.
+- Explain tradeoffs and regression risks when scope is non-trivial.
 
-## Change policy
-- Before major edits, produce a plan.
-- Make one focused change per PR where practical.
-- Explain tradeoffs and regression risks.
-- Do not silently change user wording or information architecture.
+## Verification requirements
+- Verify desktop layout.
+- Verify narrow mobile layout.
+- Verify no-JS readability.
+- Verify links still work.
+- Verify wallpaper/background behavior remains stable on mobile.
+- Verify new docs remain internally consistent with each other.
 
-## Verification
-- Test desktop and narrow mobile layout.
-- Test no-JS readability.
-- Check that links still work.
-- Check that wallpaper/background behavior remains stable on mobile.
+## Codex behavior rules
+- Always start by reading this file.
+- Stay within the requested scope. Do not overreach into unrelated cleanup.
+- Do not move files, activate future features, or change deployment unless the task explicitly calls for it.
+- Verify before finishing and report any gaps clearly.
+- If repo rules and task wording conflict, resolve the docs so future ambiguity is removed.
