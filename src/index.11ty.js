@@ -73,15 +73,17 @@ function readContentFragment(contentSource) {
 }
 
 function renderMenuAction(item) {
+  const className = item.className ? ` ${escapeHtml(item.className)}` : "";
+
   if (item.kind === "link") {
-    return `<a class="menu-action menu-link" href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a>`;
+    return `<a class="menu-action menu-link${className}" href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a>`;
   }
 
   if (item.kind === "button") {
-    return `<button class="menu-action menu-button" type="button" ${item.dataAttr}="${escapeHtml(item.dataValue)}">${escapeHtml(item.label)}</button>`;
+    return `<button class="menu-action menu-button${className}" type="button" ${item.dataAttr}="${escapeHtml(item.dataValue)}">${escapeHtml(item.label)}</button>`;
   }
 
-  return `<p class="menu-note">${escapeHtml(item.label)}</p>`;
+  return `<p class="menu-note${className}">${escapeHtml(item.label)}</p>`;
 }
 
 function renderModeChoices(availableModes, currentModeId) {
@@ -151,8 +153,8 @@ module.exports = class {
         id: "edit",
         label: "Edit",
         panel: [
-          renderMenuAction({ kind: "button", label: "Copy page URL", dataAttr: "data-copy-url", dataValue: "page" }),
-          renderMenuAction({ kind: "button", label: "Copy GitHub URL", dataAttr: "data-copy-url", dataValue: "github" }),
+          renderMenuAction({ kind: "button", label: "Copy page URL", dataAttr: "data-copy-url", dataValue: "page", className: "js-only-control" }),
+          renderMenuAction({ kind: "button", label: "Copy GitHub URL", dataAttr: "data-copy-url", dataValue: "github", className: "js-only-control" }),
           renderMenuAction({ kind: "note", label: "Read only document" })
         ].join("")
       },
@@ -171,13 +173,13 @@ module.exports = class {
                     ${renderThemeChoices(availableThemes, theme.id)}
                   </div>
                 </section>
-                <p class="menu-note no-js-note" style="display: none;">Enhanced theme and mode controls need optional JavaScript. The readable fallback stays active without it.</p>`
+                <p class="menu-note no-js-note">Enhanced theme and mode controls need optional JavaScript. The readable fallback stays active without it.</p>`
       },
       {
         id: "help",
         label: "Help",
         panel: [
-          renderMenuAction({ kind: "button", label: "Reset display", dataAttr: "data-reset-display", dataValue: "true" }),
+          renderMenuAction({ kind: "button", label: "Reset display", dataAttr: "data-reset-display", dataValue: "true", className: "js-only-control" }),
           renderMenuAction({ kind: "link", label: "Skip to content", href: "#main" }),
           renderMenuAction({ kind: "link", label: "GitHub profile", href: githubProfileUrl })
         ].join("")
@@ -257,6 +259,7 @@ module.exports = class {
 <body
   data-app="${escapeHtml(app.id)}"
   data-shell="${escapeHtml(page.shellId || "v2")}"
+  data-enhanced="false"
   data-theme="${escapeHtml(theme.id)}"
   data-theme-family="${escapeHtml(themeFamily.id)}"
   data-mode="${escapeHtml(mode.id)}"
@@ -292,7 +295,7 @@ ${contentHtml}
         </main>
 
         <footer class="status-bar" aria-label="Document status">
-          <p class="status-segment"><span data-shell-status>Read only</span></p>
+          <p class="status-segment"><span data-shell-status role="status" aria-live="polite" aria-atomic="true">Read only</span></p>
           <p class="status-segment">Single window</p>
           <p class="status-segment">Theme: <span data-current-theme>${escapeHtml(theme.label)}</span></p>
           <p class="status-segment status-segment--mode">Mode: <span data-current-mode>${escapeHtml(mode.label)}</span></p>

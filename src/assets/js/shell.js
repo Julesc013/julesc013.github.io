@@ -65,12 +65,64 @@
     return false;
   }
 
+  function findMenuGroup(node) {
+    var current = node;
+
+    while (current && current !== document) {
+      if (current.classList && current.classList.contains("menu-group")) {
+        return current;
+      }
+
+      current = current.parentNode;
+    }
+
+    return null;
+  }
+
   function closeMenus(exceptGroup) {
     each(menuGroups, function (group) {
       if (group !== exceptGroup) {
         group.open = false;
       }
     });
+  }
+
+  function focusMenuSummary(group) {
+    if (!group) {
+      return;
+    }
+
+    var summary = group.querySelector(".menu-summary");
+
+    if (!summary) {
+      return;
+    }
+
+    if (summary.focus) {
+      summary.focus();
+    }
+  }
+
+  function findMenuLink(node) {
+    var current = node;
+
+    while (current) {
+      if (current === document) {
+        break;
+      }
+
+      if (current.tagName === "A") {
+        if (current.classList) {
+          if (current.classList.contains("menu-link")) {
+            return current;
+          }
+        }
+      }
+
+      current = current.parentNode;
+    }
+
+    return null;
   }
 
   function setStatusMessage(message) {
@@ -294,11 +346,25 @@
     });
   });
 
+  document.addEventListener("focusin", function (event) {
+    if (!containsMenuTarget(event.target)) {
+      closeMenus();
+    }
+  });
+
   document.addEventListener("click", function (event) {
     var target = event.target;
+    var actionMenuGroup = findMenuGroup(target);
 
     if (!containsMenuTarget(target)) {
       closeMenus();
+    }
+
+    var menuLink = findMenuLink(target);
+
+    if (menuLink) {
+      closeMenus();
+      return;
     }
 
     var themeButton = findDataTarget(target, "data-set-theme");
@@ -307,6 +373,7 @@
       applyTheme(themeButton.getAttribute("data-set-theme"));
       setStatusMessage("Theme changed");
       closeMenus();
+      focusMenuSummary(actionMenuGroup);
       return;
     }
 
@@ -316,6 +383,7 @@
       applyMode(modeButton.getAttribute("data-set-mode"));
       setStatusMessage("Mode changed");
       closeMenus();
+      focusMenuSummary(actionMenuGroup);
       return;
     }
 
@@ -329,6 +397,7 @@
       }
 
       closeMenus();
+      focusMenuSummary(actionMenuGroup);
       return;
     }
 
@@ -337,12 +406,23 @@
     if (resetButton) {
       resetDisplay();
       closeMenus();
+      focusMenuSummary(actionMenuGroup);
     }
   });
 
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
+      var activeMenu = findMenuGroup(document.activeElement);
+
       closeMenus();
+
+      if (activeMenu) {
+        var summary = activeMenu.querySelector(".menu-summary");
+
+        if (summary && summary.focus) {
+          summary.focus();
+        }
+      }
     }
   });
 })();

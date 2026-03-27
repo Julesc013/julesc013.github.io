@@ -12,9 +12,11 @@
   --title2: #1084d0;
   --title-text: #ffffff;
   --body-font: Tahoma, "MS Sans Serif", Geneva, sans-serif;
+  --focus-outline: #000000;
   --wallpaper-image: url("bg_2560x1920.jpg");
   --wallpaper-opacity: 0.7;
   --wallpaper-filter: none;
+  --desktop-padding: 22px;
   --desktop-padding: clamp(10px, 2.6vw, 22px);
   --window-max-width: 62rem;
   --window-radius: 0;
@@ -69,6 +71,7 @@ body::before {
 .desktop-shell {
   min-height: 100vh;
   min-height: 100dvh;
+  padding: 22px;
   padding: var(--desktop-padding);
 }
 
@@ -113,6 +116,7 @@ body::before {
   font-size: 1rem;
   line-height: 1.2;
   font-weight: 700;
+  overflow-wrap: break-word;
   overflow-wrap: anywhere;
 }
 
@@ -184,11 +188,14 @@ body::before {
 
 .menu-summary {
   display: block;
-  padding: 2px 6px;
+  padding: 6px 10px;
+  min-height: 2.25rem;
+  line-height: 1.2;
   color: var(--text);
-  cursor: default;
+  cursor: pointer;
   list-style: none;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .menu-summary::-webkit-details-marker {
@@ -197,11 +204,12 @@ body::before {
 
 .menu-summary span {
   display: block;
+  width: 100%;
 }
 
 .menu-group[open] > .menu-summary,
 .menu-summary:hover,
-.menu-summary:focus-visible {
+.menu-summary:focus {
   background: var(--menu-highlight-bg);
   color: var(--menu-highlight-text);
   outline: none;
@@ -213,6 +221,7 @@ body::before {
   top: calc(100% + 2px);
   z-index: 20;
   min-width: min(18rem, 92vw);
+  max-width: calc(100vw - 24px);
   padding: 8px;
   background: var(--menu-panel-bg);
   border-top: 2px solid var(--light);
@@ -247,7 +256,9 @@ body::before {
   display: block;
   width: 100%;
   margin: 0;
-  padding: 4px 8px;
+  min-height: 2.25rem;
+  padding: 7px 12px;
+  line-height: 1.25;
   color: var(--text);
   font: inherit;
   text-align: left;
@@ -256,9 +267,10 @@ body::before {
   border: 0;
 }
 
+.menu-link,
 .menu-button,
 .menu-choice {
-  cursor: default;
+  cursor: pointer;
 }
 
 .menu-note {
@@ -266,9 +278,9 @@ body::before {
 }
 
 .menu-action:hover,
-.menu-action:focus-visible,
+.menu-action:focus,
 .menu-choice:hover,
-.menu-choice:focus-visible {
+.menu-choice:focus {
   background: var(--menu-highlight-bg);
   color: var(--menu-highlight-text);
   outline: none;
@@ -277,6 +289,27 @@ body::before {
 .menu-choice[aria-pressed="true"] {
   background: var(--menu-highlight-bg);
   color: var(--menu-highlight-text);
+}
+
+body[data-enhanced="false"] .js-only-control {
+  display: none !important;
+}
+
+body[data-enhanced="false"] .menu-panel {
+  position: static;
+  min-width: 0;
+  width: 100%;
+  margin-top: 4px;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+body[data-enhanced="false"] .no-js-note {
+  display: block !important;
+}
+
+body[data-enhanced="true"] .no-js-note {
+  display: none !important;
 }
 
 .window-body {
@@ -320,6 +353,7 @@ p {
 
 a {
   color: var(--link);
+  overflow-wrap: break-word;
   overflow-wrap: anywhere;
 }
 
@@ -327,13 +361,25 @@ a:visited {
   color: var(--visited);
 }
 
-a:focus-visible,
-.skip-link:focus-visible,
-.window-content:focus-visible,
-.menu-summary:focus-visible,
-.menu-action:focus-visible {
-  outline: 2px dotted #000000;
+a:focus,
+.skip-link:focus,
+.window-content:focus,
+.menu-summary:focus,
+.menu-action:focus,
+.menu-choice:focus {
+  outline: 2px dotted var(--focus-outline);
   outline-offset: 2px;
+}
+
+@supports selector(:focus-visible) {
+  a:focus:not(:focus-visible),
+  .skip-link:focus:not(:focus-visible),
+  .window-content:focus:not(:focus-visible),
+  .menu-summary:focus:not(:focus-visible),
+  .menu-action:focus:not(:focus-visible),
+  .menu-choice:focus:not(:focus-visible) {
+    outline: none;
+  }
 }
 
 .skip-link {
@@ -341,6 +387,7 @@ a:focus-visible,
   left: 8px;
   top: -100px;
   z-index: 1000;
+  max-width: calc(100% - 16px);
   padding: 8px 10px;
   background: #ffffe1;
   color: #000000;
@@ -370,10 +417,12 @@ a:focus-visible,
   border-right: 1px solid var(--light);
   border-bottom: 1px solid var(--light);
   font-size: 0.875rem;
+  overflow-wrap: break-word;
   overflow-wrap: anywhere;
 }
 
 body[data-mode="museum"] {
+  --desktop-padding: 24px;
   --desktop-padding: clamp(16px, 4vw, 34px);
   --window-max-width: 56rem;
   --wallpaper-opacity: 1;
@@ -383,6 +432,7 @@ body[data-mode="museum"] {
 }
 
 body[data-mode="practical"] {
+  --desktop-padding: 16px;
   --desktop-padding: clamp(10px, 2.6vw, 22px);
   --window-max-width: 62rem;
   --wallpaper-opacity: 0.62;
@@ -498,6 +548,7 @@ body[data-theme="msdos"] {
   --menu-highlight-text: #000000;
   --menu-panel-shadow: 0 0 0 transparent;
   --wallpaper-opacity: 0.18;
+  --focus-outline: #ffffff;
 }
 
 body[data-theme="msdos"] .window,
@@ -514,6 +565,12 @@ body[data-theme="msdos"] .document-content {
 
 body[data-theme="msdos"] .menu-note {
   color: #d0d0d0;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  body::before {
+    display: none;
+  }
 }
 
 @media (max-width: 700px) {
@@ -536,6 +593,8 @@ body[data-theme="msdos"] .menu-note {
   }
 
   .window {
+    min-height: 100vh;
+    min-height: 100dvh;
     box-shadow: none;
     border-left: 0;
     border-right: 0;
@@ -557,24 +616,34 @@ body[data-theme="msdos"] .menu-note {
   }
 
   .menu-bar {
-    padding: 4px 6px;
+    padding: 6px 8px;
   }
 
   .menu-list {
-    gap: 4px 6px;
+    gap: 6px;
   }
 
   .menu-item {
     flex: 1 1 calc(50% - 6px);
-    min-width: 8rem;
+    min-width: 0;
   }
 
   .menu-panel {
     position: static;
     min-width: 0;
     width: 100%;
-    margin-top: 2px;
+    margin-top: 4px;
+    border-width: 1px;
     box-shadow: none;
+  }
+
+  .menu-summary {
+    padding: 9px 12px;
+  }
+
+  .menu-action,
+  .menu-note {
+    padding: 10px 12px;
   }
 
   .window-body {
@@ -596,10 +665,16 @@ body[data-theme="msdos"] .menu-note {
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 560px) {
   .menu-item {
     flex-basis: 100%;
     min-width: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .menu-choice-list {
+    gap: 6px;
   }
 
   .document-content {
