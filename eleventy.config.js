@@ -1,25 +1,33 @@
-const themes = require("./src/_data/themes.json");
+const fs = require("fs");
+const path = require("path");
 
-function getAssetMappings() {
-  const mappings = new Map();
-
-  for (const theme of themes.items) {
-    mappings.set(theme.stylesheetSource, theme.stylesheetOutputPath);
-
-    for (const fileName of theme.rootAssetFiles || []) {
-      mappings.set(`${theme.rootAssetSourceDir}/${fileName}`, fileName);
-    }
-  }
-
-  mappings.set("src/assets/js/shell.js", "shell.js");
-
-  return [...mappings.entries()];
-}
+const rootAssetFiles = [
+  "background.heic",
+  "background.jpeg",
+  "bg_1920x1440.heic",
+  "bg_1920x1440.jpg",
+  "bg_2560x1920.heic",
+  "bg_2560x1920.jpg"
+];
 
 module.exports = function (eleventyConfig) {
-  for (const [source, destination] of getAssetMappings()) {
+  eleventyConfig.addPassthroughCopy({
+    "src/assets/css/style.css": "style.css"
+  });
+
+  eleventyConfig.addPassthroughCopy({
+    "src/assets/js/shell.js": "shell.js"
+  });
+
+  for (const fileName of rootAssetFiles) {
     eleventyConfig.addPassthroughCopy({
-      [source]: destination
+      [`src/assets/img/wallpapers/${fileName}`]: fileName
+    });
+  }
+
+  if (fs.existsSync(path.join(__dirname, "public"))) {
+    eleventyConfig.addPassthroughCopy({
+      public: "."
     });
   }
 
@@ -31,7 +39,6 @@ module.exports = function (eleventyConfig) {
       output: "_site"
     },
     templateFormats: [
-      "njk",
       "11ty.js"
     ]
   };

@@ -1,30 +1,30 @@
-﻿# Extant V1 Definition
+# Extant Definition
 
-## V1 Baseline
-The repository retains the root-served static V1 experience as its rollback baseline and parity reference.
+## Current Baseline
+The current extant baseline is the generated single-page homepage served at `/`, built from the authoritative `src/` source tree.
 
-- The canonical V1 page is `index.html` at the site root.
-- The canonical V1 stylesheet is `style.css` at the site root.
-- The retained V1 page is a single readable document with a skip link, one visible window-styled surface, a main content region, and a project-link list.
-- No JavaScript is required for reading the retained V1 page.
-- The current wallpaper/background treatment is decorative and is sourced from root-resident image assets.
-- The active CSS reference today is `bg_2560x1920.jpg`.
-- The implemented V2 site is now built from `src/` and emits `_site/`, but the root V1 files remain in-repo as rollback safety.
+- The canonical homepage source is `src/index.11ty.js`.
+- The canonical homepage content fragment is `src/content/home.html`.
+- The canonical stylesheet source is `src/assets/css/style.css`.
+- The canonical shell behavior source is `src/assets/js/shell.js`.
+- The wallpaper source set lives under `src/assets/img/wallpapers/`.
+- The generated site still emits `index.html`, `style.css`, `shell.js`, and wallpaper files at the output root for continuity at `/`.
 
-## Production-Critical Files
-These files define the retained V1 rollback surface and parity reference. Keep them in place until their retirement is explicitly approved:
+## Production-Critical Source Files
+These files define the current V2 source baseline and parity gate:
 
-- `index.html`
-- `style.css`
-- `bg_2560x1920.jpg`
-
-The remaining root wallpaper assets are protected supporting assets while rollback safety is still required:
-
-- `background.heic`
-- `background.jpeg`
-- `bg_1920x1440.heic`
-- `bg_1920x1440.jpg`
-- `bg_2560x1920.heic`
+- `src/index.11ty.js`
+- `src/content/home.html`
+- `src/assets/css/style.css`
+- `src/assets/js/shell.js`
+- `src/assets/img/wallpapers/bg_2560x1920.jpg`
+- `src/_data/pages.json`
+- `src/_data/themes.json`
+- `src/_data/theme-families.json`
+- `src/_data/modes.json`
+- `src/_data/apps.json`
+- `src/_data/capabilities.json`
+- `tools/check-parity.cjs`
 
 ## What Must Not Regress
 - The site root `/` must continue to expose the homepage content directly.
@@ -39,18 +39,15 @@ The remaining root wallpaper assets are protected supporting assets while rollba
 - Internal implementation details behind the same user-visible behavior.
 - Theme tokens, CSS organization, registry wiring, or shell polish that do not break parity.
 - Decorative polish that preserves the retro direction, readability, and layout stability.
-- The current source/build scaffolding under `src/` and `_site/`, provided the canonical URL shape and rollback safety remain intact.
+- Generated output file plumbing, provided the canonical URL shape and readable no-JS path remain intact.
 
-## What Must Not Change While Rollback Safety Is Required
-- Keep the root V1 files in place until production publishing authority and rollback strategy are explicitly reconfirmed.
-- The canonical V1 content path at `/` must survive V2 and V3+ work.
-- The repository must not silently move, rename, or retire current root deployment files.
-- V2 must remain exactly one desktop surface plus one Notepad/TextEdit-style document window.
-- Multi-window management, launcher behavior, taskbar/dock behavior, and richer shell features remain V3+ work.
-- No task may make primary content access depend on JavaScript.
+## Rollback Model
+- Rollback safety now comes from git history, branch isolation, and the passing parity gate rather than from duplicate authored root site files.
+- `main` remains the live deployment line unless deployment policy is explicitly changed.
+- Development branches should stay source-only once `src/` is the verified source of truth.
 
 ## Explicit Parity Definition
-For this repository, parity means that a generated or restructured output is an acceptable replacement for the retained root rollback surface only when all of the following are true:
+For this repository, parity means that a generated or restructured output is an acceptable replacement only when all of the following are true:
 
 - The site root `/` still exposes the same canonical homepage content.
 - User-written copy is unchanged unless an explicit content-change instruction approved otherwise.
@@ -61,12 +58,13 @@ For this repository, parity means that a generated or restructured output is an 
 - Wallpaper/background behavior remains stable on desktop and mobile within normal browser tolerance.
 - No new runtime requirement is introduced for basic access to the page.
 
-## Early Regression Checklist
+## Verification Checklist
 - Open the site at `/` and confirm the homepage content is still directly visible.
 - Disable JavaScript and confirm the page remains readable and linkable.
 - Check the main content order and heading hierarchy.
-- Compare outbound link destinations against the extant baseline.
+- Compare outbound link destinations against the canonical source content fragment.
 - Check desktop layout.
 - Check narrow mobile layout.
 - Check wallpaper/background behavior on mobile.
 - Confirm no early V3+ features have been activated in V2 work.
+- Run `npm run build:parity` and confirm the generated output matches the authoritative `src/` sources.

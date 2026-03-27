@@ -8,7 +8,8 @@
     "build": "npm run clean:site && eleventy",
     "dev": "eleventy --serve",
     "parity:check": "node tools/check-parity.cjs",
-    "build:parity": "npm run build && npm run parity:check"
+    "build:parity": "npm run build && npm run parity:check",
+    "verify": "npm run build:parity"
   },
   "devDependencies": {
     "@11ty/eleventy": "3.1.2"

@@ -1,4 +1,4 @@
-const crypto = require("crypto");
+const crypto=require("crypto");
 const fs = require("fs");
 const path = require("path");
 
@@ -6,16 +6,7 @@ const rootDir = process.cwd();
 const siteDir = path.join(rootDir, "_site");
 const srcDir = path.join(rootDir, "src");
 
-const rootAuthorityFiles = [
-  "index.html",
-  "style.css",
-  "background.heic",
-  "background.jpeg",
-  "bg_1920x1440.heic",
-  "bg_1920x1440.jpg",
-  "bg_2560x1920.heic",
-  "bg_2560x1920.jpg"
-];
+const rootAuthorityFiles=[];
 
 const generatedFiles = [
   "index.html",
@@ -132,9 +123,9 @@ for (const fileName of generatedFiles) {
   report(fs.existsSync(path.join(siteDir, fileName)), `generated file exists: ${fileName}`);
 }
 
-const rootHtml = normalizeText(fs.readFileSync(path.join(rootDir, "index.html"), "utf8"));
+const rootHtml=normalizeText(fs.readFileSync(path.join(srcDir,"content","home.html"),"utf8"));
 const siteHtml = normalizeText(fs.readFileSync(path.join(siteDir, "index.html"), "utf8"));
-const rootCss = normalizeText(fs.readFileSync(path.join(rootDir, "style.css"), "utf8"));
+const rootCss=normalizeText(fs.readFileSync(path.join(srcDir,"assets","css","style.css"),"utf8"));
 const siteCss = normalizeText(fs.readFileSync(path.join(siteDir, "style.css"), "utf8"));
 const sourceCss = normalizeText(
   fs.readFileSync(path.join(srcDir, "assets", "css", "style.css"), "utf8")
@@ -144,7 +135,7 @@ const sourceJs = normalizeText(
 );
 const siteJs = normalizeText(fs.readFileSync(path.join(siteDir, "shell.js"), "utf8"));
 const sourceContent = normalizeWhitespace(
-  stripTags(fs.readFileSync(path.join(srcDir, "content", "index.html"), "utf8"))
+  stripTags(fs.readFileSync(path.join(srcDir,"content","home.html"), "utf8"))
 );
 const siteText = normalizeWhitespace(stripTags(siteHtml));
 
@@ -158,7 +149,7 @@ report(
 const rootHtmlRefs = extractLocalHtmlRefs(rootHtml);
 const siteHtmlRefs = extractLocalHtmlRefs(siteHtml);
 report(isSubset(rootHtmlRefs, siteHtmlRefs), "generated HTML preserves root local refs");
-report(refsExist(rootDir, rootHtmlRefs), "root HTML references resolve");
+report(refsExist(path.join(srcDir,"content"),rootHtmlRefs), "root HTML references resolve");
 report(refsExist(siteDir, siteHtmlRefs), "generated HTML references resolve");
 
 const scriptRefs = extractScriptRefs(siteHtml);
@@ -173,7 +164,7 @@ report(
   JSON.stringify(rootCssRefs) === JSON.stringify(siteCssRefs),
   "CSS asset reference parity"
 );
-report(refsExist(rootDir, rootCssRefs), "root CSS references resolve");
+report(refsExist(path.join(srcDir,"assets","img","wallpapers"),rootCssRefs), "root CSS references resolve");
 report(refsExist(siteDir, siteCssRefs), "generated CSS references resolve");
 report(siteCss === sourceCss, "generated CSS matches source CSS");
 report(siteJs === sourceJs, "generated JS matches source JS");
@@ -215,7 +206,7 @@ for (const modeId of modeChoices) {
 }
 
 report(
-  hashFile(path.join(rootDir, "bg_2560x1920.jpg")) ===
+  hashFile(path.join(srcDir,"assets","img","wallpapers","bg_2560x1920.jpg")) ===
     hashFile(path.join(siteDir, "bg_2560x1920.jpg")),
   "active wallpaper hash parity"
 );

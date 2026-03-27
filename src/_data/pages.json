@@ -6,7 +6,7 @@
       "route": "/",
       "title": "Jules Carboni's Homepage",
       "description": "Jules Carboni's homepage.",
-      "contentSource": "src/content/index.html",
+      "contentSource": "src/content/home.html",
       "appId": "notepad",
       "defaultThemeId": "win98",
       "defaultModeId": "practical",

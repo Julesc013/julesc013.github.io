@@ -5,65 +5,25 @@
       "id": "win98",
       "familyId": "windows-classic",
       "label": "Windows 98",
-      "stylesheetSource": "src/assets/css/style.css",
-      "stylesheetOutputPath": "style.css",
-      "rootAssetSourceDir": "src/assets/img/wallpapers",
-      "rootAssetFiles": [
-        "background.heic",
-        "background.jpeg",
-        "bg_1920x1440.heic",
-        "bg_1920x1440.jpg",
-        "bg_2560x1920.heic",
-        "bg_2560x1920.jpg"
-      ]
+      "stylesheetOutputPath": "style.css"
     },
     {
       "id": "macos9",
       "familyId": "mac-classic",
       "label": "Mac OS 9",
-      "stylesheetSource": "src/assets/css/style.css",
-      "stylesheetOutputPath": "style.css",
-      "rootAssetSourceDir": "src/assets/img/wallpapers",
-      "rootAssetFiles": [
-        "background.heic",
-        "background.jpeg",
-        "bg_1920x1440.heic",
-        "bg_1920x1440.jpg",
-        "bg_2560x1920.heic",
-        "bg_2560x1920.jpg"
-      ]
+      "stylesheetOutputPath": "style.css"
     },
     {
       "id": "cde",
       "familyId": "x11-retro",
       "label": "CDE",
-      "stylesheetSource": "src/assets/css/style.css",
-      "stylesheetOutputPath": "style.css",
-      "rootAssetSourceDir": "src/assets/img/wallpapers",
-      "rootAssetFiles": [
-        "background.heic",
-        "background.jpeg",
-        "bg_1920x1440.heic",
-        "bg_1920x1440.jpg",
-        "bg_2560x1920.heic",
-        "bg_2560x1920.jpg"
-      ]
+      "stylesheetOutputPath": "style.css"
     },
     {
       "id": "msdos",
       "familyId": "dos-retro",
       "label": "MS-DOS",
-      "stylesheetSource": "src/assets/css/style.css",
-      "stylesheetOutputPath": "style.css",
-      "rootAssetSourceDir": "src/assets/img/wallpapers",
-      "rootAssetFiles": [
-        "background.heic",
-        "background.jpeg",
-        "bg_1920x1440.heic",
-        "bg_1920x1440.jpg",
-        "bg_2560x1920.heic",
-        "bg_2560x1920.jpg"
-      ]
+      "stylesheetOutputPath": "style.css"
     }
   ]
 }

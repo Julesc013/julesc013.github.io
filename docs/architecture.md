@@ -1,7 +1,7 @@
 # Architecture Contract
 
 ## Purpose
-This document defines the repository's architecture contract for the current post-migration V2 baseline: a registry-backed Eleventy build that preserves the canonical content path at `/`, keeps the site readable without JavaScript, and retains root legacy files for rollback safety.
+This document defines the repository architecture contract for the current source-only V2 baseline: a registry-backed Eleventy build from `src/` into `_site/` that preserves the canonical content path at `/`, keeps the page readable without JavaScript, and avoids duplicate authored root sources.
 
 ## Core Principles
 - Content-first: user-facing content is primary and must remain readable without JavaScript.
@@ -18,12 +18,12 @@ This document defines the repository's architecture contract for the current pos
 - The locked global data directory is `src/_data/`.
 - The locked layouts/includes directory is `src/_includes/`.
 - The locked generated output directory is `_site/`.
-- The repository now contains GitHub Actions workflows that build and deploy `_site/`.
-- Root legacy files remain in the repo as rollback and parity-reference artifacts until their retirement is explicitly approved.
+- GitHub Actions build and deploy `_site/`.
+- Development work must edit `src/` and supporting docs/tooling rather than reintroducing root-authored duplicate site files.
 
 ## System Layers
 - Content: user-written copy, page text, structured records, and canonical document content.
-- Shell: framing elements such as page chrome, desktop surface, window chrome, and future shell containers.
+- Shell: framing elements such as page chrome, desktop surface, and window chrome.
 - Theme: presentation tokens, family selection, and visual rules that do not alter content meaning.
 - Behavior: optional JavaScript enhancements for menus, theme controls, mode controls, and light shell polish.
 
@@ -44,27 +44,16 @@ The dependency direction is inward:
 ## Registry Model
 - Registries are the source of truth for pages, apps, themes, modes, and related configuration.
 - Each registry owns its own namespace.
-- Cross-registry references must use IDs, not file paths.
+- Cross-registry references must use IDs, not file paths, for identity.
 - Templates and build logic consume registry data; they do not define identity themselves.
 - Moving a file, renaming a template, or reorganizing source folders must not require changing public or internal stable IDs.
-
-## Common Schema Rules
-- Every registry entry must have a required `id`.
-- IDs must be kebab-case.
-- IDs must be unique within their registry.
-- IDs must be stable over time.
-- IDs must be path-independent.
-- Human-readable labels or titles may change without changing IDs.
-- Classification fields such as family, kind, or mode do not replace the stable ID.
-- Relationships between records must reference IDs only.
-- Optional fields must fail safely when absent.
 
 ## Source vs Output
 - Editable source files live under `src/`.
 - Generated output lives under `_site/`.
 - Generated output is not the hand-edited source of truth.
-- The repository is configured for Actions-based build and deploy from `_site/`, but root legacy files remain protected rollback artifacts until external publishing settings are confirmed stable.
-- Source migration and future cleanup must preserve the current canonical URL structure and the canonical content path at `/`.
+- The generated site may still emit root-path files such as `index.html`, `style.css`, `shell.js`, and wallpaper assets for behavior continuity at `/`.
+- The development line must not keep duplicate authored root site files once source-driven parity is established.
 
 ## Future Extensibility Model
 - V2 work is limited to one desktop surface and one Notepad/TextEdit-style document window.
