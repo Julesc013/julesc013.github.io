@@ -1,0 +1,16 @@
+{
+  "name": "julesc013.github.io",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Build scaffolding for the julesc013.github.io static site",
+  "scripts": {
+    "clean:site": "node tools/clean-site.cjs",
+    "build": "npm run clean:site && eleventy",
+    "dev": "eleventy --serve",
+    "parity:check": "node tools/check-parity.cjs",
+    "build:parity": "npm run build && npm run parity:check"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "3.1.2"
+  }
+}

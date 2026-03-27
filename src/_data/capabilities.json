@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "no-js-readable",
+      "label": "No-JS readable"
+    },
+    {
+      "id": "single-document",
+      "label": "Single document"
+    },
+    {
+      "id": "single-window",
+      "label": "Single window"
+    },
+    {
+      "id": "menu-bar",
+      "label": "Menu bar"
+    },
+    {
+      "id": "theme-switching",
+      "label": "Theme switching"
+    },
+    {
+      "id": "mode-switching",
+      "label": "Mode switching"
+    },
+    {
+      "id": "optional-persistence",
+      "label": "Optional persistence"
+    }
+  ]
+}

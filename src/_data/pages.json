@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "home",
+      "route": "/",
+      "title": "Jules Carboni's Homepage",
+      "description": "Jules Carboni's homepage.",
+      "contentSource": "src/content/index.html",
+      "appId": "notepad",
+      "defaultThemeId": "win98",
+      "defaultModeId": "practical",
+      "shellId": "v2",
+      "capabilityIds": [
+        "no-js-readable",
+        "single-document",
+        "single-window",
+        "menu-bar",
+        "theme-switching",
+        "mode-switching",
+        "optional-persistence"
+      ]
+    }
+  ]
+}

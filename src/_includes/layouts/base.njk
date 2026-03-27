@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="{{ lang or 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title or "Document" }}</title>
+  {% if stylesheetPath %}
+  <link rel="stylesheet" href="{{ stylesheetPath }}">
+  {% endif %}
+</head>
+<body>
+{{ content | safe }}
+</body>
+</html>

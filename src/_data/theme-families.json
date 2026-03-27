@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "windows-classic",
+      "label": "Windows Classic"
+    },
+    {
+      "id": "mac-classic",
+      "label": "Mac Classic"
+    },
+    {
+      "id": "x11-retro",
+      "label": "X11 Retro"
+    },
+    {
+      "id": "dos-retro",
+      "label": "DOS Retro"
+    }
+  ]
+}
