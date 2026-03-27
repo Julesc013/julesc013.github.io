@@ -125,6 +125,16 @@
     return null;
   }
 
+  function supportsDetailsDisclosure() {
+    var details = document.createElement("details");
+
+    if (!("open" in details)) {
+      return false;
+    }
+
+    return true;
+  }
+
   function setStatusMessage(message) {
     if (!statusNode) {
       return;
@@ -322,6 +332,10 @@
     }
   }
 
+  if (!supportsDetailsDisclosure()) {
+    return;
+  }
+
   setBodyAttr("data-enhanced", "true");
   syncThemeButtons(getBodyAttr("data-theme") || defaultTheme);
   syncModeButtons(getBodyAttr("data-mode") || defaultMode);
@@ -417,11 +431,7 @@
       closeMenus();
 
       if (activeMenu) {
-        var summary = activeMenu.querySelector(".menu-summary");
-
-        if (summary && summary.focus) {
-          summary.focus();
-        }
+        focusMenuSummary(activeMenu);
       }
     }
   });

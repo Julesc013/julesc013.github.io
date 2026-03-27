@@ -195,11 +195,16 @@ body::before {
   cursor: pointer;
   list-style: none;
   user-select: none;
+  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
 .menu-summary::-webkit-details-marker {
   display: none;
+}
+
+.menu-summary::marker {
+  content: "";
 }
 
 .menu-summary span {
@@ -271,10 +276,16 @@ body::before {
 .menu-button,
 .menu-choice {
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .menu-note {
   color: var(--mid);
+}
+
+.menu-action {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .menu-action:hover,
@@ -302,6 +313,20 @@ body[data-enhanced="false"] .menu-panel {
   margin-top: 4px;
   border-width: 1px;
   box-shadow: none;
+}
+
+body[data-enhanced="false"] .window-controls {
+  display: none;
+}
+
+body[data-enhanced="false"] .status-segment {
+  background: transparent;
+  border: 0;
+  padding: 0 10px 0 0;
+}
+
+body[data-enhanced="false"] .status-segment--mode {
+  display: none;
 }
 
 body[data-enhanced="false"] .no-js-note {
@@ -657,7 +682,16 @@ body[data-theme="msdos"] .menu-note {
   }
 
   .status-bar {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    white-space: nowrap;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    border: 0;
   }
 
   p {
