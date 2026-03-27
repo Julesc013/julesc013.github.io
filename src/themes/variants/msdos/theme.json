@@ -1,0 +1,4 @@
+{
+  "id": "msdos",
+  "tokenSelector": "body[data-theme=\"msdos\"]"
+}

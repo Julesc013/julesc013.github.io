@@ -1,6 +1,9 @@
 const crypto=require("crypto");
 const fs = require("fs");
 const path = require("path");
+const { buildThemeStylesheet } = require("../src/themes/theme-system");
+const themesRegistry = require("../src/_data/themes.json");
+const themeReferencesManifest = require("../src/_data/theme-references.json");
 
 const rootDir = process.cwd();
 const siteDir = path.join(rootDir, "_site");
@@ -27,6 +30,7 @@ const requiredShellMarkers = [
   "menu-bar",
   "status-bar"
 ];
+const allowedCoverageStatuses = new Set(["strong", "usable", "weak", "missing"]);
 
 let failures = 0;
 
@@ -125,11 +129,9 @@ for (const fileName of generatedFiles) {
 
 const rootHtml=normalizeText(fs.readFileSync(path.join(srcDir,"content","home.html"),"utf8"));
 const siteHtml = normalizeText(fs.readFileSync(path.join(siteDir, "index.html"), "utf8"));
-const rootCss=normalizeText(fs.readFileSync(path.join(srcDir,"assets","css","style.css"),"utf8"));
+const rootCss=normalizeText(buildThemeStylesheet());
 const siteCss = normalizeText(fs.readFileSync(path.join(siteDir, "style.css"), "utf8"));
-const sourceCss = normalizeText(
-  fs.readFileSync(path.join(srcDir, "assets", "css", "style.css"), "utf8")
-);
+const sourceCss = rootCss;
 const sourceJs = normalizeText(
   fs.readFileSync(path.join(srcDir, "assets", "js", "shell.js"), "utf8")
 );
@@ -189,13 +191,73 @@ for (const label of menuLabels) {
   report(new RegExp(`>\\s*${label}\\s*<`, "i").test(siteHtml), `menu label present: ${label}`);
 }
 
-const themeChoices = ["win98", "macos9", "cde", "msdos"];
-for (const themeId of themeChoices) {
+const visibleCatalogThemes = themesRegistry.items.filter((entry) => entry.visibleInCatalog);
+const selectableThemes = visibleCatalogThemes.filter((entry) => entry.selectable);
+const unavailableThemes = visibleCatalogThemes.filter((entry) => !entry.selectable);
+const hiddenThemes = themesRegistry.items.filter((entry) => !entry.visibleInCatalog);
+const themeReferenceEntries = themeReferencesManifest.themes || [];
+const themeReferenceMap = new Map(themeReferenceEntries.map((entry) => [entry.id, entry]));
+
+for (const themeEntry of selectableThemes) {
   report(
-    siteHtml.includes(`data-set-theme="${themeId}"`),
-    `theme control present: ${themeId}`
+    siteHtml.includes(`data-set-theme="${themeEntry.id}"`),
+    `theme control present: ${themeEntry.id}`
   );
 }
+
+for (const themeEntry of unavailableThemes) {
+  report(
+    siteHtml.includes(`data-theme-catalog-id="${themeEntry.id}"`),
+    `theme catalog entry present: ${themeEntry.id}`
+  );
+  report(
+    siteHtml.includes(`data-theme-availability="${themeEntry.availability}"`) ||
+      siteHtml.includes(`data-theme-status="${themeEntry.status}"`),
+    `theme catalog status rendered: ${themeEntry.id}`
+  );
+}
+
+for (const themeEntry of hiddenThemes) {
+  report(
+    !siteHtml.includes(`data-set-theme="${themeEntry.id}"`) &&
+      !siteHtml.includes(`data-theme-catalog-id="${themeEntry.id}"`),
+    `hidden theme omitted from visible catalog: ${themeEntry.id}`
+  );
+}
+
+report(Array.isArray(themeReferencesManifest.scanRoots), "theme reference scan roots present");
+report(
+  themeReferencesManifest.summary && typeof themeReferencesManifest.summary.corpusStatus === "string",
+  "theme reference corpus summary present"
+);
+report(
+  themeReferenceEntries.length === visibleCatalogThemes.length,
+  "theme reference entry count matches visible catalog"
+);
+
+for (const themeEntry of visibleCatalogThemes) {
+  const referenceEntry = themeReferenceMap.get(themeEntry.id);
+
+  report(!!referenceEntry, `theme reference entry present: ${themeEntry.id}`);
+
+  if (!referenceEntry) {
+    continue;
+  }
+
+  report(referenceEntry.label === themeEntry.label, `theme reference label matches: ${themeEntry.id}`);
+  report(referenceEntry.familyId === themeEntry.familyId, `theme reference family matches: ${themeEntry.id}`);
+  report(
+    allowedCoverageStatuses.has(referenceEntry.coverageStatus),
+    `theme reference coverage status valid: ${themeEntry.id}`
+  );
+}
+
+report(siteHtml.includes('"settings"'), "runtime settings registry present");
+report(siteHtml.includes('"themeReferences"'), "runtime theme references registry present");
+report(siteHtml.includes('"profile"'), "runtime profile setting present");
+report(siteHtml.includes('"effects"'), "runtime effects setting present");
+report(siteHtml.includes('"scale"'), "runtime scale setting present");
+report(siteHtml.includes('"accessibility"'), "runtime accessibility setting present");
 
 const modeChoices = ["museum", "practical", "safe"];
 for (const modeId of modeChoices) {

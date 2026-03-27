@@ -1,21 +1,65 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "items": [
     {
       "id": "windows-classic",
-      "label": "Windows Classic"
+      "label": "Windows Classic",
+      "status": "partial",
+      "catalogVisibility": "visible",
+      "legacy": false,
+      "packageDir": "src/themes/families/windows-classic",
+      "defaultEffectsLevel": "medium",
+      "defaultProfile": "balanced"
+    },
+    {
+      "id": "windows-modern",
+      "label": "Windows Modern",
+      "status": "scaffolded",
+      "catalogVisibility": "visible",
+      "legacy": false,
+      "packageDir": "src/themes/families/windows-modern",
+      "defaultEffectsLevel": "medium",
+      "defaultProfile": "balanced"
     },
     {
       "id": "mac-classic",
-      "label": "Mac Classic"
+      "label": "Mac Classic",
+      "status": "partial",
+      "catalogVisibility": "visible",
+      "legacy": false,
+      "packageDir": "src/themes/families/mac-classic",
+      "defaultEffectsLevel": "medium",
+      "defaultProfile": "balanced"
+    },
+    {
+      "id": "macosx",
+      "label": "Mac OS X",
+      "status": "scaffolded",
+      "catalogVisibility": "visible",
+      "legacy": false,
+      "packageDir": "src/themes/families/macosx",
+      "defaultEffectsLevel": "medium",
+      "defaultProfile": "balanced"
     },
     {
       "id": "x11-retro",
-      "label": "X11 Retro"
+      "label": "X11 Retro",
+      "status": "implemented",
+      "catalogVisibility": "hidden",
+      "legacy": true,
+      "packageDir": "src/themes/families/x11-retro",
+      "defaultEffectsLevel": "medium",
+      "defaultProfile": "balanced"
     },
     {
       "id": "dos-retro",
-      "label": "DOS Retro"
+      "label": "DOS Retro",
+      "status": "implemented",
+      "catalogVisibility": "hidden",
+      "legacy": true,
+      "packageDir": "src/themes/families/dos-retro",
+      "defaultEffectsLevel": "off",
+      "defaultProfile": "fallback"
     }
   ]
 }

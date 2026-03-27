@@ -8,14 +8,20 @@
   var statusNode = document.querySelector("[data-shell-status]");
   var themeNode = document.querySelector("[data-current-theme]");
   var modeNode = document.querySelector("[data-current-mode]");
+  var registryNode = document.getElementById("shell-registry");
   var menuGroups = document.querySelectorAll(".menu-group");
   var themeButtons = document.querySelectorAll("[data-set-theme]");
   var modeButtons = document.querySelectorAll("[data-set-mode]");
   var storageKey = "jules-shell-prefs:v1";
   var messageTimer = null;
+  var registry = readRegistry();
   var defaultTheme = getBodyAttr("data-default-theme") || getBodyAttr("data-theme");
   var defaultThemeFamily = getBodyAttr("data-default-theme-family") || getBodyAttr("data-theme-family");
   var defaultMode = getBodyAttr("data-default-mode") || getBodyAttr("data-mode");
+  var defaultProfile = getBodyAttr("data-default-profile") || getSettingDefault("profile", "balanced");
+  var defaultEffects = getBodyAttr("data-default-effects") || getSettingDefault("effects", "medium");
+  var defaultScale = getBodyAttr("data-default-scale") || getSettingDefault("scale", "auto");
+  var defaultAccessibility = normalizeAccessibility(getBodyAttr("data-default-accessibility"));
 
   function getBodyAttr(name) {
     return body.getAttribute(name) || "";
@@ -23,6 +29,10 @@
 
   function setBodyAttr(name, value) {
     body.setAttribute(name, value);
+  }
+
+  function removeBodyAttr(name) {
+    body.removeAttribute(name);
   }
 
   function each(nodes, callback) {
@@ -94,11 +104,7 @@
 
     var summary = group.querySelector(".menu-summary");
 
-    if (!summary) {
-      return;
-    }
-
-    if (summary.focus) {
+    if (summary && summary.focus) {
       summary.focus();
     }
   }
@@ -111,12 +117,8 @@
         break;
       }
 
-      if (current.tagName === "A") {
-        if (current.classList) {
-          if (current.classList.contains("menu-link")) {
-            return current;
-          }
-        }
+      if (current.tagName === "A" && current.classList && current.classList.contains("menu-link")) {
+        return current;
       }
 
       current = current.parentNode;
@@ -133,6 +135,131 @@
     }
 
     return true;
+  }
+
+  function readRegistry() {
+    if (!registryNode) {
+      return {
+        themes: {},
+        themeAliases: {},
+        modes: {},
+        settings: {
+          groups: {}
+        }
+      };
+    }
+
+    try {
+      return JSON.parse(registryNode.textContent);
+    } catch (error) {
+      return {
+        themes: {},
+        themeAliases: {},
+        modes: {},
+        settings: {
+          groups: {}
+        }
+      };
+    }
+  }
+
+  function getSettingGroup(settingId) {
+    return (registry.settings && registry.settings.groups && registry.settings.groups[settingId]) || null;
+  }
+
+  function getSettingDefault(settingId, fallbackValue) {
+    var group = getSettingGroup(settingId);
+
+    if (!group || typeof group.default === "undefined") {
+      return fallbackValue;
+    }
+
+    return group.default;
+  }
+
+  function getAllowedOptionIds(settingId) {
+    var group = getSettingGroup(settingId);
+
+    if (!group || !group.options) {
+      return [];
+    }
+
+    var optionIds = [];
+
+    for (var index = 0; index < group.options.length; index += 1) {
+      optionIds.push(group.options[index].id);
+    }
+
+    return optionIds;
+  }
+
+  function normalizeSingleSetting(settingId, value, fallbackValue) {
+    var allowed = getAllowedOptionIds(settingId);
+    var defaultValue = getSettingDefault(settingId, fallbackValue);
+
+    if (allowed.indexOf(value) !== -1) {
+      return value;
+    }
+
+    return defaultValue;
+  }
+
+  function normalizeAccessibility(value) {
+    var allowed = getAllowedOptionIds("accessibility");
+    var rawValues;
+    var normalized = [];
+
+    if (Array.isArray(value)) {
+      rawValues = value;
+    } else if (typeof value === "string" && value) {
+      rawValues = value.split(",");
+    } else {
+      rawValues = [];
+    }
+
+    for (var index = 0; index < rawValues.length; index += 1) {
+      var candidate = String(rawValues[index]).trim();
+
+      if (!candidate) {
+        continue;
+      }
+
+      if (allowed.indexOf(candidate) === -1) {
+        continue;
+      }
+
+      if (normalized.indexOf(candidate) === -1) {
+        normalized.push(candidate);
+      }
+    }
+
+    return normalized;
+  }
+
+  function setAccessibilityFlags(accessibility) {
+    var flags = [
+      "reduce-motion",
+      "higher-contrast",
+      "larger-text",
+      "simplified-menus"
+    ];
+
+    setBodyAttr("data-accessibility", accessibility.join(","));
+
+    for (var index = 0; index < flags.length; index += 1) {
+      var flag = flags[index];
+      var attrName = "data-a11y-" + flag;
+
+      if (accessibility.indexOf(flag) !== -1) {
+        setBodyAttr(attrName, "true");
+      } else {
+        removeBodyAttr(attrName);
+      }
+    }
+  }
+
+  function getAccessibilityFromBody() {
+    return normalizeAccessibility(getBodyAttr("data-accessibility"));
   }
 
   function setStatusMessage(message) {
@@ -177,8 +304,46 @@
     return findByAttr(modeButtons, "data-set-mode", modeId);
   }
 
-  function getThemeMeta(themeId) {
-    var button = findThemeButton(themeId);
+  function resolveThemeId(themeId, options) {
+    var resolvedThemeId = themeId;
+
+    if (registry.themeAliases && registry.themeAliases[resolvedThemeId]) {
+      resolvedThemeId = registry.themeAliases[resolvedThemeId];
+    }
+
+    var meta = registry.themes && registry.themes[resolvedThemeId];
+
+    if (!meta) {
+      return null;
+    }
+
+    if (!meta.selectable) {
+      return null;
+    }
+
+    if (meta.availability === "hidden" && !(options && options.allowHidden)) {
+      return null;
+    }
+
+    return resolvedThemeId;
+  }
+
+  function getThemeMeta(themeId, options) {
+    var resolvedThemeId = resolveThemeId(themeId, options);
+    var registryTheme;
+    var button;
+
+    if (resolvedThemeId && registry.themes && registry.themes[resolvedThemeId]) {
+      registryTheme = registry.themes[resolvedThemeId];
+
+      return {
+        id: registryTheme.id,
+        label: registryTheme.label,
+        family: registryTheme.familyId || defaultThemeFamily
+      };
+    }
+
+    button = findThemeButton(themeId);
 
     if (!button) {
       return null;
@@ -192,7 +357,17 @@
   }
 
   function getModeMeta(modeId) {
-    var button = findModeButton(modeId);
+    var registryMode = registry.modes && registry.modes[modeId];
+    var button;
+
+    if (registryMode) {
+      return {
+        id: registryMode.id,
+        label: registryMode.label
+      };
+    }
+
+    button = findModeButton(modeId);
 
     if (!button) {
       return null;
@@ -210,7 +385,11 @@
         storageKey,
         JSON.stringify({
           theme: getBodyAttr("data-theme") || defaultTheme,
-          mode: getBodyAttr("data-mode") || defaultMode
+          mode: getBodyAttr("data-mode") || defaultMode,
+          profile: getBodyAttr("data-profile") || defaultProfile,
+          effects: getBodyAttr("data-effects") || defaultEffects,
+          scale: getBodyAttr("data-scale") || defaultScale,
+          accessibility: getAccessibilityFromBody()
         })
       );
     } catch (error) {
@@ -219,7 +398,7 @@
   }
 
   function applyTheme(themeId, options) {
-    var meta = getThemeMeta(themeId);
+    var meta = getThemeMeta(themeId, options);
 
     if (!meta) {
       return false;
@@ -263,10 +442,37 @@
     return true;
   }
 
+  function applyDisplayPreferences(preferences, options) {
+    var normalizedProfile = normalizeSingleSetting("profile", preferences && preferences.profile, defaultProfile);
+    var normalizedEffects = normalizeSingleSetting("effects", preferences && preferences.effects, defaultEffects);
+    var normalizedScale = normalizeSingleSetting("scale", preferences && preferences.scale, defaultScale);
+    var normalizedAccessibility = normalizeAccessibility(preferences && preferences.accessibility);
+
+    setBodyAttr("data-profile", normalizedProfile);
+    setBodyAttr("data-effects", normalizedEffects);
+    setBodyAttr("data-scale", normalizedScale);
+    setAccessibilityFlags(normalizedAccessibility);
+
+    if (!options || options.persist !== false) {
+      savePreferences();
+    }
+
+    return true;
+  }
+
   function resetDisplay() {
     applyTheme(defaultTheme, { persist: false });
     setBodyAttr("data-theme-family", defaultThemeFamily);
     applyMode(defaultMode, { persist: false });
+    applyDisplayPreferences(
+      {
+        profile: defaultProfile,
+        effects: defaultEffects,
+        scale: defaultScale,
+        accessibility: defaultAccessibility
+      },
+      { persist: false }
+    );
     savePreferences();
     setStatusMessage("Display reset");
   }
@@ -342,15 +548,15 @@
 
   var storedPreferences = readPreferences();
 
-  if (storedPreferences) {
-    if (storedPreferences.theme) {
-      applyTheme(storedPreferences.theme, { persist: false });
-    }
-
-    if (storedPreferences.mode) {
-      applyMode(storedPreferences.mode, { persist: false });
-    }
+  if (!storedPreferences || !storedPreferences.theme || !applyTheme(storedPreferences.theme, { persist: false, allowHidden: true })) {
+    applyTheme(defaultTheme, { persist: false });
   }
+
+  if (!storedPreferences || !storedPreferences.mode || !applyMode(storedPreferences.mode, { persist: false })) {
+    applyMode(defaultMode, { persist: false });
+  }
+
+  applyDisplayPreferences(storedPreferences || {}, { persist: false });
 
   each(menuGroups, function (group) {
     group.addEventListener("toggle", function () {
@@ -384,8 +590,10 @@
     var themeButton = findDataTarget(target, "data-set-theme");
 
     if (themeButton) {
-      applyTheme(themeButton.getAttribute("data-set-theme"));
-      setStatusMessage("Theme changed");
+      if (applyTheme(themeButton.getAttribute("data-set-theme"))) {
+        setStatusMessage("Theme changed");
+      }
+
       closeMenus();
       focusMenuSummary(actionMenuGroup);
       return;

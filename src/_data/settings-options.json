@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "groups": [
+    {
+      "id": "theme",
+      "label": "Theme",
+      "type": "catalog",
+      "default": "win98",
+      "uiVisibility": "primary",
+      "sourceRegistry": "themes"
+    },
+    {
+      "id": "profile",
+      "label": "Fidelity",
+      "type": "single",
+      "default": "balanced",
+      "uiVisibility": "advanced",
+      "options": [
+        {
+          "id": "authentic",
+          "label": "Authentic"
+        },
+        {
+          "id": "balanced",
+          "label": "Balanced"
+        },
+        {
+          "id": "fallback",
+          "label": "Fallback"
+        }
+      ]
+    },
+    {
+      "id": "effects",
+      "label": "Effects",
+      "type": "single",
+      "default": "medium",
+      "uiVisibility": "advanced",
+      "options": [
+        {
+          "id": "off",
+          "label": "Off"
+        },
+        {
+          "id": "low",
+          "label": "Low"
+        },
+        {
+          "id": "medium",
+          "label": "Medium"
+        },
+        {
+          "id": "high",
+          "label": "High"
+        }
+      ]
+    },
+    {
+      "id": "scale",
+      "label": "Scale",
+      "type": "single",
+      "default": "auto",
+      "uiVisibility": "advanced",
+      "options": [
+        {
+          "id": "auto",
+          "label": "Auto"
+        },
+        {
+          "id": "1x",
+          "label": "1x"
+        },
+        {
+          "id": "1.25x",
+          "label": "1.25x"
+        },
+        {
+          "id": "1.5x",
+          "label": "1.5x"
+        },
+        {
+          "id": "2x",
+          "label": "2x"
+        },
+        {
+          "id": "fit",
+          "label": "Fit"
+        }
+      ]
+    },
+    {
+      "id": "accessibility",
+      "label": "Accessibility",
+      "type": "multi",
+      "default": [],
+      "uiVisibility": "internal",
+      "options": [
+        {
+          "id": "reduce-motion",
+          "label": "Reduce motion"
+        },
+        {
+          "id": "higher-contrast",
+          "label": "Higher contrast"
+        },
+        {
+          "id": "larger-text",
+          "label": "Larger text"
+        },
+        {
+          "id": "simplified-menus",
+          "label": "Simplified menus"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "id": "x11-retro",
+  "tokenSelector": "body[data-theme-family=\"x11-retro\"]"
+}

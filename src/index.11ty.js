@@ -7,6 +7,9 @@ const themes = require("./_data/themes.json");
 const themeFamilies = require("./_data/theme-families.json");
 const modes = require("./_data/modes.json");
 const capabilities = require("./_data/capabilities.json");
+const settingsOptions = require("./_data/settings-options.json");
+const settingsUi = require("./_data/settings-ui.json");
+const { buildRuntimeRegistry } = require("./themes/theme-system");
 
 function getRequiredItem(registryName, items, id) {
   const item = items.find((entry) => entry.id === id);
@@ -27,6 +30,10 @@ function escapeHtml(value) {
     .replace(/'/g, "&#39;");
 }
 
+function escapeInlineJson(value) {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
 function routeToPermalink(route) {
   if (route === "/") {
     return "index.html";
@@ -41,16 +48,41 @@ function routeToPermalink(route) {
   return trimmed;
 }
 
+function getSettingsGroup(groupId) {
+  return getRequiredItem("settings-options", settingsOptions.groups, groupId);
+}
+
+function getCatalogStatusLabel(entry) {
+  if (entry.selectable && entry.availability === "enabled") {
+    return "Available";
+  }
+
+  if (entry.status === "partial") {
+    return "Preview";
+  }
+
+  return "Unavailable";
+}
+
+function groupThemesByFamily(themeEntries) {
+  return themeFamilies.items
+    .filter((family) => family.catalogVisibility !== "hidden")
+    .map((family) => ({
+      family,
+      themes: themeEntries.filter((entry) => entry.familyId === family.id)
+    }))
+    .filter((group) => group.themes.length > 0);
+}
+
 function resolveHomePage() {
   const page = getRequiredItem("pages", pages.items, "home");
   const app = getRequiredItem("apps", apps.items, page.appId);
   const theme = getRequiredItem("themes", themes.items, page.defaultThemeId);
   const themeFamily = getRequiredItem("theme-families", themeFamilies.items, theme.familyId);
   const mode = getRequiredItem("modes", modes.items, page.defaultModeId);
-  const availableThemes = themes.items.map((entry) => ({
-    ...entry,
-    family: getRequiredItem("theme-families", themeFamilies.items, entry.familyId)
-  }));
+  const visibleCatalogThemes = themes.items.filter((entry) => entry.visibleInCatalog);
+  const selectableThemes = visibleCatalogThemes.filter((entry) => entry.selectable);
+  const catalogThemes = visibleCatalogThemes.filter((entry) => !entry.selectable);
   const availableModes = modes.items.slice();
 
   for (const capabilityId of page.capabilityIds || []) {
@@ -63,8 +95,11 @@ function resolveHomePage() {
     theme,
     themeFamily,
     mode,
-    availableThemes,
-    availableModes
+    selectableThemes,
+    catalogThemeGroups: groupThemesByFamily(catalogThemes),
+    availableModes,
+    settingsGroups: settingsOptions.groups.slice(),
+    viewSettingsUi: settingsUi.panels.view || {}
   };
 }
 
@@ -100,8 +135,8 @@ function renderModeChoices(availableModes, currentModeId) {
     .join("");
 }
 
-function renderThemeChoices(availableThemes, currentThemeId) {
-  return availableThemes
+function renderSelectableThemeChoices(selectableThemes, currentThemeId) {
+  return selectableThemes
     .map(
       (entry) => `<button
                 class="menu-action menu-choice js-only-control"
@@ -109,10 +144,53 @@ function renderThemeChoices(availableThemes, currentThemeId) {
                 data-set-theme="${escapeHtml(entry.id)}"
                 data-theme-family="${escapeHtml(entry.familyId)}"
                 data-theme-label="${escapeHtml(entry.label)}"
+                data-theme-status="${escapeHtml(entry.status)}"
+                data-theme-availability="${escapeHtml(entry.availability)}"
                 aria-pressed="${entry.id === currentThemeId ? "true" : "false"}"
               >${escapeHtml(entry.label)}</button>`
     )
     .join("");
+}
+
+function renderThemeCatalogGroups(catalogThemeGroups) {
+  return catalogThemeGroups
+    .map(
+      ({ family, themes: familyThemes }) => `<section class="menu-catalog-group" data-theme-family-group="${escapeHtml(family.id)}">
+                  <p class="menu-catalog-family">${escapeHtml(family.label)}</p>
+                  <div class="menu-catalog-list">
+                    ${familyThemes
+                      .map(
+                        (entry) => `<p
+                      class="menu-note menu-catalog-entry"
+                      data-theme-catalog-id="${escapeHtml(entry.id)}"
+                      data-theme-status="${escapeHtml(entry.status)}"
+                      data-theme-availability="${escapeHtml(entry.availability)}"
+                    ><span class="menu-catalog-label">${escapeHtml(entry.label)}</span><span class="menu-catalog-status">${escapeHtml(
+                          getCatalogStatusLabel(entry)
+                        )}</span></p>`
+                      )
+                      .join("")}
+                  </div>
+                </section>`
+    )
+    .join("");
+}
+
+function renderAdvancedSettingsNote(settingsGroups, viewSettingsUi) {
+  if (!viewSettingsUi.showAdvancedNote) {
+    return "";
+  }
+
+  const advancedLabels = (viewSettingsUi.advancedGroups || [])
+    .map((groupId) => getSettingsGroup(groupId).label.toLowerCase())
+    .join(", ");
+
+  return `<section class="menu-section" aria-label="Display settings roadmap">
+                  <p class="menu-section-title">Display settings</p>
+                  <p class="menu-note">Advanced display settings for ${escapeHtml(
+                    advancedLabels
+                  )} are scaffolded in the registry and stay on safe defaults in V2.</p>
+                </section>`;
 }
 
 function renderMenuGroup(group) {
@@ -137,9 +215,25 @@ module.exports = class {
   }
 
   render() {
-    const { page, app, theme, themeFamily, mode, availableThemes, availableModes } = resolveHomePage();
+    const {
+      page,
+      app,
+      theme,
+      themeFamily,
+      mode,
+      selectableThemes,
+      catalogThemeGroups,
+      availableModes,
+      settingsGroups,
+      viewSettingsUi
+    } = resolveHomePage();
     const contentHtml = readContentFragment(page.contentSource);
     const githubProfileUrl = "https://github.com/Julesc013";
+    const runtimeRegistry = escapeInlineJson(buildRuntimeRegistry(availableModes));
+    const profileDefaults = getSettingsGroup("profile");
+    const effectsDefaults = getSettingsGroup("effects");
+    const scaleDefaults = getSettingsGroup("scale");
+    const accessibilityDefaults = getSettingsGroup("accessibility");
     const menuGroups = [
       {
         id: "file",
@@ -167,13 +261,18 @@ module.exports = class {
                     ${renderModeChoices(availableModes, mode.id)}
                   </div>
                 </section>
-                <section class="menu-section js-only-control" aria-label="Theme choices">
-                  <p class="menu-section-title">Theme</p>
+                <section class="menu-section js-only-control" aria-label="Available themes">
+                  <p class="menu-section-title">Available now</p>
                   <div class="menu-choice-list">
-                    ${renderThemeChoices(availableThemes, theme.id)}
+                    ${renderSelectableThemeChoices(selectableThemes, theme.id)}
                   </div>
                 </section>
-                <p class="menu-note no-js-note">Enhanced theme and mode controls need optional JavaScript. The readable fallback stays active without it.</p>`
+                <section class="menu-section" aria-label="Theme catalog">
+                  <p class="menu-section-title">Theme catalog</p>
+                  ${renderThemeCatalogGroups(catalogThemeGroups)}
+                </section>
+                ${renderAdvancedSettingsNote(settingsGroups, viewSettingsUi)}
+                <p class="menu-note no-js-note">Enhanced theme switching still needs optional JavaScript. The catalog remains readable without it.</p>`
       },
       {
         id: "help",
@@ -254,6 +353,7 @@ module.exports = class {
       }
     </style>
   </noscript>
+  <script id="shell-registry" type="application/json">${runtimeRegistry}</script>
   <script src="shell.js" defer></script>
 </head>
 <body
@@ -263,9 +363,17 @@ module.exports = class {
   data-theme="${escapeHtml(theme.id)}"
   data-theme-family="${escapeHtml(themeFamily.id)}"
   data-mode="${escapeHtml(mode.id)}"
+  data-profile="${escapeHtml(profileDefaults.default)}"
+  data-effects="${escapeHtml(effectsDefaults.default)}"
+  data-scale="${escapeHtml(scaleDefaults.default)}"
+  data-accessibility="${escapeHtml((accessibilityDefaults.default || []).join(","))}"
   data-default-theme="${escapeHtml(theme.id)}"
   data-default-theme-family="${escapeHtml(themeFamily.id)}"
   data-default-mode="${escapeHtml(mode.id)}"
+  data-default-profile="${escapeHtml(profileDefaults.default)}"
+  data-default-effects="${escapeHtml(effectsDefaults.default)}"
+  data-default-scale="${escapeHtml(scaleDefaults.default)}"
+  data-default-accessibility="${escapeHtml((accessibilityDefaults.default || []).join(","))}"
 >
   <a class="skip-link" href="#main">Skip to content</a>
 

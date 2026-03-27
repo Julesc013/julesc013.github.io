@@ -1,0 +1,4 @@
+{
+  "id": "macosx",
+  "tokenSelector": "body[data-theme-family=\"macosx\"]"
+}

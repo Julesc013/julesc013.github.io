@@ -1,0 +1,4 @@
+{
+  "id": "windows-modern",
+  "tokenSelector": "body[data-theme-family=\"windows-modern\"]"
+}

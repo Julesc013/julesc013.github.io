@@ -1,0 +1,4 @@
+{
+  "id": "macos9",
+  "tokenSelector": "body[data-theme=\"macos9\"]"
+}

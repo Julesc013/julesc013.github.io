@@ -1,0 +1,3 @@
+body[data-theme-family="macosx"] .menu-panel {
+  border-radius: var(--menu-panel-radius, 10px);
+}

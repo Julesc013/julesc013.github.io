@@ -1,0 +1,3 @@
+body[data-theme-family="windows-classic"] .window-control {
+  border-radius: 0;
+}

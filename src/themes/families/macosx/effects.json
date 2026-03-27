@@ -1,0 +1,46 @@
+{
+  "defaultLevel": 2,
+  "supportedLevels": [0, 1, 2, 3],
+  "levels": {
+    "0": {
+      "wallpaperOpacity": "0",
+      "wallpaperFilter": "none",
+      "windowShadow": "0 0 0 transparent",
+      "windowOffsetShadow": "0 0 0 transparent",
+      "menuPanelShadow": "0 0 0 transparent",
+      "menuPanelBackground": "var(--face)",
+      "titleBarBackground": "var(--face)",
+      "backdropFilter": "none"
+    },
+    "1": {
+      "wallpaperOpacity": "0.25",
+      "wallpaperFilter": "saturate(1.01)",
+      "windowShadow": "0 0 0 1px rgba(122, 133, 149, 0.22)",
+      "windowOffsetShadow": "0 10px 24px rgba(14, 23, 35, 0.14)",
+      "menuPanelShadow": "0 10px 24px rgba(14, 23, 35, 0.14)",
+      "menuPanelBackground": "rgba(255, 255, 255, 0.92)",
+      "titleBarBackground": "linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(214, 223, 236, 0.88))",
+      "backdropFilter": "none"
+    },
+    "2": {
+      "wallpaperOpacity": "0.55",
+      "wallpaperFilter": "saturate(1.03)",
+      "windowShadow": "0 0 0 1px rgba(122, 133, 149, 0.26)",
+      "windowOffsetShadow": "0 16px 36px rgba(14, 23, 35, 0.18)",
+      "menuPanelShadow": "0 16px 36px rgba(14, 23, 35, 0.18)",
+      "menuPanelBackground": "rgba(255, 255, 255, 0.82)",
+      "titleBarBackground": "linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(214, 223, 236, 0.78))",
+      "backdropFilter": "blur(6px) saturate(1.08)"
+    },
+    "3": {
+      "wallpaperOpacity": "0.68",
+      "wallpaperFilter": "saturate(1.08)",
+      "windowShadow": "0 0 0 1px rgba(122, 133, 149, 0.3)",
+      "windowOffsetShadow": "0 22px 44px rgba(14, 23, 35, 0.22)",
+      "menuPanelShadow": "0 22px 44px rgba(14, 23, 35, 0.22)",
+      "menuPanelBackground": "rgba(255, 255, 255, 0.72)",
+      "titleBarBackground": "linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(214, 223, 236, 0.68))",
+      "backdropFilter": "blur(12px) saturate(1.16)"
+    }
+  }
+}

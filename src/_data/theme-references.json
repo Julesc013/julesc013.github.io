@@ -1,0 +1,251 @@
+{
+  "version": 1,
+  "scanDate": "2026-03-28",
+  "scanRoots": [
+    {
+      "path": "C:\\tmp",
+      "kind": "tmp-root",
+      "accessible": true,
+      "imageCount": 0,
+      "notes": "Contains launcher logs and scratch files only. No screenshot corpus was present."
+    },
+    {
+      "path": "C:\\Users\\Jules\\AppData\\Local\\Temp",
+      "kind": "windows-user-temp",
+      "accessible": true,
+      "imageCount": 306,
+      "notes": "Contains generic Chrome extension icons, flag packs, and installer branding assets. No credible OS chrome screenshots were present."
+    }
+  ],
+  "ignoredRoots": [
+    {
+      "path": "C:\\Users\\Jules\\AppData\\Local\\Temp\\chromecrx_chrome_Unpacker_BeginUnzipping21320_1654388495\\img",
+      "imageCount": 266,
+      "reason": "Chrome extension asset pack with icons and flags, not desktop screenshots."
+    },
+    {
+      "path": "C:\\Users\\Jules\\AppData\\Local\\Temp\\fya5dbcs.xh2\\Assets",
+      "imageCount": 10,
+      "reason": "Installer branding icons, not theme chrome references."
+    },
+    {
+      "path": "C:\\Users\\Jules\\AppData\\Local\\Temp\\r1vmqfv0.5ds\\Assets",
+      "imageCount": 10,
+      "reason": "Installer branding icons, not theme chrome references."
+    },
+    {
+      "path": "C:\\Users\\Jules\\AppData\\Local\\Temp\\ss1f3qrd.taq\\Assets",
+      "imageCount": 10,
+      "reason": "Installer branding icons, not theme chrome references."
+    },
+    {
+      "path": "C:\\Users\\Jules\\AppData\\Local\\Temp\\lbdegccx.oro\\Assets",
+      "imageCount": 10,
+      "reason": "Installer branding icons, not theme chrome references."
+    }
+  ],
+  "summary": {
+    "corpusStatus": "missing",
+    "themesReadyNow": [],
+    "themesNeedingExternalReference": [
+      "win31",
+      "win98",
+      "win2000",
+      "winxp",
+      "win7",
+      "win81",
+      "win10",
+      "win11",
+      "system6",
+      "macos92",
+      "macos100",
+      "macos105",
+      "macos1010",
+      "macos11",
+      "macos26"
+    ],
+    "notes": "No credible /tmp screenshot corpus was present during the Prompt 4 scan. Later fidelity prompts will need fresh references from another source."
+  },
+  "themes": [
+    {
+      "id": "win31",
+      "label": "Windows 3.1",
+      "familyId": "windows-classic",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "No credible /tmp screenshots were found for Windows 3.1."
+    },
+    {
+      "id": "win98",
+      "label": "Windows 98",
+      "familyId": "windows-classic",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "The current V2 baseline still works, but the /tmp scan did not provide fidelity screenshots for Windows 98."
+    },
+    {
+      "id": "win2000",
+      "label": "Windows 2000",
+      "familyId": "windows-classic",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "No credible /tmp screenshots were found for Windows 2000."
+    },
+    {
+      "id": "winxp",
+      "label": "Windows XP",
+      "familyId": "windows-modern",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "No credible /tmp screenshots were found for Windows XP."
+    },
+    {
+      "id": "win7",
+      "label": "Windows 7",
+      "familyId": "windows-modern",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "No credible /tmp screenshots were found for Windows 7."
+    },
+    {
+      "id": "win81",
+      "label": "Windows 8.1",
+      "familyId": "windows-modern",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "No credible /tmp screenshots were found for Windows 8.1."
+    },
+    {
+      "id": "win10",
+      "label": "Windows 10",
+      "familyId": "windows-modern",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "No credible /tmp screenshots were found for Windows 10."
+    },
+    {
+      "id": "win11",
+      "label": "Windows 11",
+      "familyId": "windows-modern",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "The temp area only contained Win11 SDK installers, not Windows 11 desktop screenshots."
+    },
+    {
+      "id": "system6",
+      "label": "System 6.0",
+      "familyId": "mac-classic",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "No credible /tmp screenshots were found for System 6.0."
+    },
+    {
+      "id": "macos92",
+      "label": "Mac OS 9.2",
+      "familyId": "mac-classic",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "The current preview implementation remains available, but the /tmp scan did not provide Mac OS 9.2 screenshots."
+    },
+    {
+      "id": "macos100",
+      "label": "Mac OS 10.0",
+      "familyId": "macosx",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "No credible /tmp screenshots were found for Mac OS 10.0."
+    },
+    {
+      "id": "macos105",
+      "label": "Mac OS 10.5",
+      "familyId": "macosx",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "No credible /tmp screenshots were found for Mac OS 10.5."
+    },
+    {
+      "id": "macos1010",
+      "label": "Mac OS 10.10",
+      "familyId": "macosx",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "No credible /tmp screenshots were found for Mac OS 10.10."
+    },
+    {
+      "id": "macos11",
+      "label": "Mac OS 11",
+      "familyId": "macosx",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "No credible /tmp screenshots were found for Mac OS 11."
+    },
+    {
+      "id": "macos26",
+      "label": "Mac OS 26",
+      "familyId": "macosx",
+      "referencePaths": [],
+      "referenceFolders": [],
+      "screenshotCount": 0,
+      "coverageStatus": "missing",
+      "hostSystems": [],
+      "confidence": 0,
+      "notes": "No credible /tmp screenshots were found for Mac OS 26."
+    }
+  ]
+}

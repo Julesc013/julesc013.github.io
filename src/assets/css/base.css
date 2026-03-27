@@ -1,0 +1,107 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  min-height: 100%;
+  background-color: var(--desktop-bg, #008080);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--desktop-bg, #008080);
+  color: var(--text, #000000);
+  font-family: var(--body-font, Tahoma, "MS Sans Serif", Geneva, sans-serif);
+  font-size: 16px;
+  line-height: var(--body-line-height, 1.45);
+  letter-spacing: var(--body-letter-spacing, normal);
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--wallpaper-image, none);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  opacity: var(--resolved-wallpaper-opacity, var(--wallpaper-opacity, 0));
+  filter: var(--resolved-wallpaper-filter, var(--wallpaper-filter, none));
+}
+
+h1 {
+  margin: 0 0 18px;
+  font-size: 1.45rem;
+  font-size: clamp(1.45rem, 2vw, 1.85rem);
+  line-height: 1.2;
+}
+
+p {
+  margin: 0 0 16px;
+  max-width: var(--paragraph-max-width, 34em);
+}
+
+.link-list {
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+
+.link-list li {
+  margin: 0 0 12px;
+}
+
+a {
+  color: var(--link, #0000aa);
+  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+a:visited {
+  color: var(--visited, #551a8b);
+}
+
+a:focus,
+.skip-link:focus,
+.window-content:focus,
+.menu-summary:focus,
+.menu-action:focus,
+.menu-choice:focus {
+  outline: 2px dotted var(--focus-outline, #000000);
+  outline-offset: 2px;
+}
+
+@supports selector(:focus-visible) {
+  a:focus:not(:focus-visible),
+  .skip-link:focus:not(:focus-visible),
+  .window-content:focus:not(:focus-visible),
+  .menu-summary:focus:not(:focus-visible),
+  .menu-action:focus:not(:focus-visible),
+  .menu-choice:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -100px;
+  z-index: 1000;
+  max-width: calc(100% - 16px);
+  padding: 8px 10px;
+  background: #ffffe1;
+  color: #000000;
+  border: 2px solid #000000;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 8px;
+}

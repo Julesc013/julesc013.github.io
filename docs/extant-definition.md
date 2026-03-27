@@ -5,7 +5,7 @@ The current extant baseline is the generated single-page homepage served at `/`,
 
 - The canonical homepage source is `src/index.11ty.js`.
 - The canonical homepage content fragment is `src/content/home.html`.
-- The canonical stylesheet source is `src/assets/css/style.css`.
+- The canonical stylesheet output remains `style.css`, generated from `src/style.11ty.js`, `src/assets/css/base.css`, `src/assets/css/shell.css`, `src/assets/css/effects.css`, `src/assets/css/modes.css`, `src/assets/css/responsive.css`, and the theme packages under `src/themes/`.
 - The canonical shell behavior source is `src/assets/js/shell.js`.
 - The wallpaper source set lives under `src/assets/img/wallpapers/`.
 - The generated site still emits `index.html`, `style.css`, `shell.js`, and wallpaper files at the output root for continuity at `/`.
@@ -15,12 +15,20 @@ These files define the current V2 source baseline and parity gate:
 
 - `src/index.11ty.js`
 - `src/content/home.html`
-- `src/assets/css/style.css`
+- `src/style.11ty.js`
+- `src/assets/css/base.css`
+- `src/assets/css/shell.css`
+- `src/assets/css/effects.css`
+- `src/assets/css/modes.css`
+- `src/assets/css/responsive.css`
+- `src/themes/`
 - `src/assets/js/shell.js`
 - `src/assets/img/wallpapers/bg_2560x1920.jpg`
 - `src/_data/pages.json`
 - `src/_data/themes.json`
 - `src/_data/theme-families.json`
+- `src/_data/settings-options.json`
+- `src/_data/settings-ui.json`
 - `src/_data/modes.json`
 - `src/_data/apps.json`
 - `src/_data/capabilities.json`
@@ -37,7 +45,7 @@ These files define the current V2 source baseline and parity gate:
 
 ## What May Change Safely
 - Internal implementation details behind the same user-visible behavior.
-- Theme tokens, CSS organization, registry wiring, or shell polish that do not break parity.
+- Theme tokens, family bases, effect policies, CSS organization, registry wiring, or shell polish that do not break parity.
 - Decorative polish that preserves the retro direction, readability, and layout stability.
 - Generated output file plumbing, provided the canonical URL shape and readable no-JS path remain intact.
 

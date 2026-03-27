@@ -1,0 +1,3 @@
+body[data-theme-family="windows-modern"] .menu-panel {
+  border-radius: var(--menu-panel-radius, 6px);
+}

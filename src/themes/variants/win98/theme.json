@@ -1,0 +1,4 @@
+{
+  "id": "win98",
+  "tokenSelector": ":root, body[data-theme=\"win98\"]"
+}

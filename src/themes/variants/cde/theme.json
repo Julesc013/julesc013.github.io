@@ -1,0 +1,4 @@
+{
+  "id": "cde",
+  "tokenSelector": "body[data-theme=\"cde\"]"
+}

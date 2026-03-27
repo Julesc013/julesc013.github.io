@@ -1,0 +1,106 @@
+body {
+  --resolved-wallpaper-opacity: var(--effects-2-wallpaper-opacity, var(--wallpaper-opacity, 0));
+  --resolved-wallpaper-filter: var(--effects-2-wallpaper-filter, var(--wallpaper-filter, none));
+  --resolved-window-shadow: var(--effects-2-window-shadow, 0 0 0 transparent);
+  --resolved-window-offset-shadow: var(--effects-2-window-offset-shadow, 0 0 0 transparent);
+  --resolved-window-shadow-stack: var(--resolved-window-shadow), var(--resolved-window-offset-shadow);
+  --resolved-menu-panel-shadow: var(--effects-2-menu-panel-shadow, 0 0 0 transparent);
+  --resolved-menu-panel-background: var(--effects-2-menu-panel-background, var(--menu-panel-bg, var(--face, #d4d0c8)));
+  --resolved-title-bar-background: var(
+    --effects-2-title-bar-background,
+    var(--title-bar-background, linear-gradient(to right, var(--title1, #000080), var(--title2, #1084d0)))
+  );
+  --resolved-backdrop-filter: var(--effects-2-backdrop-filter, none);
+}
+
+body[data-effects="off"] {
+  --resolved-wallpaper-opacity: var(--effects-0-wallpaper-opacity, 0);
+  --resolved-wallpaper-filter: var(--effects-0-wallpaper-filter, none);
+  --resolved-window-shadow: var(--effects-0-window-shadow, 0 0 0 transparent);
+  --resolved-window-offset-shadow: var(--effects-0-window-offset-shadow, 0 0 0 transparent);
+  --resolved-window-shadow-stack: var(--resolved-window-shadow), var(--resolved-window-offset-shadow);
+  --resolved-menu-panel-shadow: var(--effects-0-menu-panel-shadow, 0 0 0 transparent);
+  --resolved-menu-panel-background: var(--effects-0-menu-panel-background, var(--menu-panel-bg, var(--face, #d4d0c8)));
+  --resolved-title-bar-background: var(--effects-0-title-bar-background, var(--title1, var(--face, #d4d0c8)));
+  --resolved-backdrop-filter: var(--effects-0-backdrop-filter, none);
+}
+
+body[data-effects="low"] {
+  --resolved-wallpaper-opacity: var(--effects-1-wallpaper-opacity, var(--effects-0-wallpaper-opacity, 0));
+  --resolved-wallpaper-filter: var(--effects-1-wallpaper-filter, none);
+  --resolved-window-shadow: var(--effects-1-window-shadow, var(--effects-0-window-shadow, 0 0 0 transparent));
+  --resolved-window-offset-shadow: var(
+    --effects-1-window-offset-shadow,
+    var(--effects-0-window-offset-shadow, 0 0 0 transparent)
+  );
+  --resolved-window-shadow-stack: var(--resolved-window-shadow), var(--resolved-window-offset-shadow);
+  --resolved-menu-panel-shadow: var(--effects-1-menu-panel-shadow, var(--effects-0-menu-panel-shadow, 0 0 0 transparent));
+  --resolved-menu-panel-background: var(
+    --effects-1-menu-panel-background,
+    var(--effects-0-menu-panel-background, var(--menu-panel-bg, var(--face, #d4d0c8)))
+  );
+  --resolved-title-bar-background: var(
+    --effects-1-title-bar-background,
+    var(--effects-0-title-bar-background, var(--title-bar-background, var(--title1, #000080)))
+  );
+  --resolved-backdrop-filter: var(--effects-1-backdrop-filter, none);
+}
+
+body[data-effects="medium"] {
+  --resolved-wallpaper-opacity: var(--effects-2-wallpaper-opacity, var(--wallpaper-opacity, 0));
+  --resolved-wallpaper-filter: var(--effects-2-wallpaper-filter, var(--wallpaper-filter, none));
+  --resolved-window-shadow: var(--effects-2-window-shadow, 0 0 0 transparent);
+  --resolved-window-offset-shadow: var(--effects-2-window-offset-shadow, 0 0 0 transparent);
+  --resolved-window-shadow-stack: var(--resolved-window-shadow), var(--resolved-window-offset-shadow);
+  --resolved-menu-panel-shadow: var(--effects-2-menu-panel-shadow, 0 0 0 transparent);
+  --resolved-menu-panel-background: var(--effects-2-menu-panel-background, var(--menu-panel-bg, var(--face, #d4d0c8)));
+  --resolved-title-bar-background: var(
+    --effects-2-title-bar-background,
+    var(--title-bar-background, linear-gradient(to right, var(--title1, #000080), var(--title2, #1084d0)))
+  );
+  --resolved-backdrop-filter: var(--effects-2-backdrop-filter, none);
+}
+
+body[data-effects="high"] {
+  --resolved-wallpaper-opacity: var(
+    --effects-3-wallpaper-opacity,
+    var(--effects-2-wallpaper-opacity, var(--wallpaper-opacity, 0))
+  );
+  --resolved-wallpaper-filter: var(
+    --effects-3-wallpaper-filter,
+    var(--effects-2-wallpaper-filter, var(--wallpaper-filter, none))
+  );
+  --resolved-window-shadow: var(
+    --effects-3-window-shadow,
+    var(--effects-2-window-shadow, 0 0 0 transparent)
+  );
+  --resolved-window-offset-shadow: var(
+    --effects-3-window-offset-shadow,
+    var(--effects-2-window-offset-shadow, 0 0 0 transparent)
+  );
+  --resolved-window-shadow-stack: var(--resolved-window-shadow), var(--resolved-window-offset-shadow);
+  --resolved-menu-panel-shadow: var(
+    --effects-3-menu-panel-shadow,
+    var(--effects-2-menu-panel-shadow, 0 0 0 transparent)
+  );
+  --resolved-menu-panel-background: var(
+    --effects-3-menu-panel-background,
+    var(--effects-2-menu-panel-background, var(--menu-panel-bg, var(--face, #d4d0c8)))
+  );
+  --resolved-title-bar-background: var(
+    --effects-3-title-bar-background,
+    var(
+      --effects-2-title-bar-background,
+      var(--title-bar-background, linear-gradient(to right, var(--title1, #000080), var(--title2, #1084d0)))
+    )
+  );
+  --resolved-backdrop-filter: var(--effects-3-backdrop-filter, var(--effects-2-backdrop-filter, none));
+}
+
+@supports ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+  body[data-effects="medium"] .menu-panel,
+  body[data-effects="high"] .menu-panel {
+    -webkit-backdrop-filter: var(--resolved-backdrop-filter);
+    backdrop-filter: var(--resolved-backdrop-filter);
+  }
+}

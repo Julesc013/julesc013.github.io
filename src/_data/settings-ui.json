@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "panels": {
+    "view": {
+      "primaryGroups": [
+        "mode",
+        "theme"
+      ],
+      "advancedGroups": [
+        "profile",
+        "effects",
+        "scale",
+        "accessibility"
+      ],
+      "showThemeCatalog": true,
+      "showAdvancedNote": true
+    }
+  }
+}

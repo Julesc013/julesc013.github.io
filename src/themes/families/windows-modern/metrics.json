@@ -1,0 +1,23 @@
+{
+  "--window-radius": "8px",
+  "--window-border-width": "1px",
+  "--document-border-width": "1px",
+  "--title-bar-min-height": "34px",
+  "--title-bar-padding": "8px 12px",
+  "--title-bar-gap": "14px",
+  "--window-control-width": "16px",
+  "--window-control-height": "16px",
+  "--window-control-font-size": "10px",
+  "--window-control-gap": "6px",
+  "--menu-bar-padding": "6px 12px",
+  "--menu-summary-padding": "7px 12px",
+  "--menu-action-padding": "8px 12px",
+  "--menu-panel-padding": "10px",
+  "--menu-panel-radius": "6px",
+  "--menu-choice-gap": "6px",
+  "--menu-min-hit-size": "2.4rem",
+  "--status-bar-padding": "5px",
+  "--status-segment-padding": "3px 9px",
+  "--body-line-height": "1.45",
+  "--paragraph-max-width": "35em"
+}

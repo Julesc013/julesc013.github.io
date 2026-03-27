@@ -1,0 +1,15 @@
+body[data-theme="msdos"] .window,
+body[data-theme="msdos"] .menu-panel,
+body[data-theme="msdos"] .document-content,
+body[data-theme="msdos"] .status-segment,
+body[data-theme="msdos"] .window-control {
+  box-shadow: none;
+}
+
+body[data-theme="msdos"] .document-content {
+  background: #000000;
+}
+
+body[data-theme="msdos"] .menu-note {
+  color: #d0d0d0;
+}

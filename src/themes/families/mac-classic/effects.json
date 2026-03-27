@@ -1,0 +1,46 @@
+{
+  "defaultLevel": 2,
+  "supportedLevels": [0, 1, 2, 3],
+  "levels": {
+    "0": {
+      "wallpaperOpacity": "0",
+      "wallpaperFilter": "none",
+      "windowShadow": "0 0 0 transparent",
+      "windowOffsetShadow": "0 0 0 transparent",
+      "menuPanelShadow": "0 0 0 transparent",
+      "menuPanelBackground": "var(--menu-panel-bg)",
+      "titleBarBackground": "var(--face)",
+      "backdropFilter": "none"
+    },
+    "1": {
+      "wallpaperOpacity": "0.32",
+      "wallpaperFilter": "none",
+      "windowShadow": "0 0 0 1px rgba(78, 78, 78, 0.14)",
+      "windowOffsetShadow": "2px 2px 0 rgba(78, 78, 78, 0.1)",
+      "menuPanelShadow": "2px 2px 0 rgba(78, 78, 78, 0.1)",
+      "menuPanelBackground": "var(--menu-panel-bg)",
+      "titleBarBackground": "var(--title-bar-background)",
+      "backdropFilter": "none"
+    },
+    "2": {
+      "wallpaperOpacity": "0.7",
+      "wallpaperFilter": "none",
+      "windowShadow": "0 0 0 1px rgba(78, 78, 78, 0.18)",
+      "windowOffsetShadow": "3px 4px 0 rgba(78, 78, 78, 0.16)",
+      "menuPanelShadow": "3px 4px 0 rgba(78, 78, 78, 0.16)",
+      "menuPanelBackground": "var(--menu-panel-bg)",
+      "titleBarBackground": "var(--title-bar-background)",
+      "backdropFilter": "none"
+    },
+    "3": {
+      "wallpaperOpacity": "0.82",
+      "wallpaperFilter": "none",
+      "windowShadow": "0 0 0 1px rgba(78, 78, 78, 0.22)",
+      "windowOffsetShadow": "5px 6px 0 rgba(78, 78, 78, 0.18)",
+      "menuPanelShadow": "4px 5px 0 rgba(78, 78, 78, 0.18)",
+      "menuPanelBackground": "var(--menu-panel-bg)",
+      "titleBarBackground": "var(--title-bar-background)",
+      "backdropFilter": "none"
+    }
+  }
+}

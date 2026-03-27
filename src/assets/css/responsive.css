@@ -1,0 +1,123 @@
+@media (hover: none) and (pointer: coarse) {
+  body::before {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    font-size: 15px;
+  }
+
+  body::before {
+    display: none;
+  }
+
+  .desktop-shell {
+    min-height: auto;
+    padding: 0;
+  }
+
+  .desktop-surface,
+  .document-window {
+    max-width: none;
+  }
+
+  .window {
+    min-height: 100vh;
+    min-height: 100dvh;
+    box-shadow: none;
+    border-left: 0;
+    border-right: 0;
+  }
+
+  .title-bar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 10px;
+  }
+
+  .window-title {
+    flex: 1 1 100%;
+  }
+
+  .window-controls {
+    display: none;
+  }
+
+  .menu-bar {
+    padding: 6px 8px;
+  }
+
+  .menu-list {
+    gap: 6px;
+  }
+
+  .menu-item {
+    flex: 1 1 calc(50% - 6px);
+    min-width: 0;
+  }
+
+  .menu-panel {
+    position: static;
+    min-width: 0;
+    width: 100%;
+    margin-top: 4px;
+    border-width: 1px;
+    box-shadow: none;
+  }
+
+  .menu-summary {
+    padding: 9px 12px;
+  }
+
+  .menu-action,
+  .menu-note {
+    padding: 10px 12px;
+  }
+
+  .window-body {
+    padding: 0;
+  }
+
+  .document-content {
+    border-left: 0;
+    border-right: 0;
+    padding: 14px 12px 18px;
+  }
+
+  .status-bar {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    white-space: nowrap;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    border: 0;
+  }
+
+  p {
+    max-width: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .menu-item {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .menu-choice-list {
+    gap: 6px;
+  }
+
+  .document-content {
+    padding: 12px 10px 16px;
+  }
+}

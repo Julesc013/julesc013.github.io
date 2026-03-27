@@ -1,0 +1,4 @@
+{
+  "id": "mac-classic",
+  "tokenSelector": "body[data-theme-family=\"mac-classic\"]"
+}

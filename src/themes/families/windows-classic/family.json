@@ -1,0 +1,4 @@
+{
+  "id": "windows-classic",
+  "tokenSelector": ":root, body[data-theme-family=\"windows-classic\"]"
+}

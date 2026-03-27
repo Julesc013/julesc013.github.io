@@ -1,0 +1,66 @@
+body[data-mode="museum"] {
+  --desktop-padding: 24px;
+  --desktop-padding: clamp(16px, 4vw, 34px);
+  --window-max-width: 56rem;
+  --wallpaper-opacity: 1;
+  --window-offset-shadow: 6px 6px 0 rgba(0, 0, 0, 0.22);
+  --window-body-padding: 12px;
+  --document-padding: 18px 20px;
+}
+
+body[data-mode="practical"] {
+  --desktop-padding: 16px;
+  --desktop-padding: clamp(10px, 2.6vw, 22px);
+  --window-max-width: 62rem;
+  --wallpaper-opacity: 0.62;
+  --window-body-padding: 10px;
+  --document-padding: 16px 18px;
+}
+
+body[data-mode="safe"] {
+  --desktop-padding: 12px;
+  --window-max-width: 72rem;
+  --wallpaper-opacity: 0;
+  --window-offset-shadow: 0 0 0 transparent;
+  --window-shadow: none;
+  --window-body-padding: 0;
+  --document-padding: 14px 16px;
+}
+
+body[data-mode="safe"]::before {
+  display: none;
+}
+
+body[data-mode="safe"] .window {
+  border-width: 1px;
+  box-shadow: none;
+}
+
+body[data-mode="safe"] .title-bar,
+body[data-mode="safe"] .menu-bar,
+body[data-mode="safe"] .status-bar {
+  background: var(--face);
+  color: var(--text);
+}
+
+body[data-mode="safe"] .window-controls {
+  display: none;
+}
+
+body[data-mode="safe"] .menu-panel {
+  position: static;
+  min-width: 0;
+  margin-top: 4px;
+  border-width: 1px;
+  box-shadow: none;
+}
+
+body[data-mode="safe"] .status-segment {
+  background: transparent;
+  border: 0;
+  padding: 0 10px 0 0;
+}
+
+body[data-mode="safe"] .document-content {
+  border-width: 1px;
+}

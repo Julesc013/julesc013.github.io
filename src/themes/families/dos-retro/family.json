@@ -1,0 +1,4 @@
+{
+  "id": "dos-retro",
+  "tokenSelector": "body[data-theme-family=\"dos-retro\"]"
+}

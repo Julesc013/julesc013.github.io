@@ -12,12 +12,11 @@ const rootAssetFiles = [
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({
-    "src/assets/css/style.css": "style.css"
-  });
-
-  eleventyConfig.addPassthroughCopy({
     "src/assets/js/shell.js": "shell.js"
   });
+
+  eleventyConfig.addWatchTarget("src/themes");
+  eleventyConfig.addWatchTarget("src/assets/css");
 
   for (const fileName of rootAssetFiles) {
     eleventyConfig.addPassthroughCopy({

@@ -33,7 +33,9 @@ V2 is exactly one desktop surface plus one Notepad/TextEdit-style document windo
 - Theme metadata and mode metadata exist in the registries and rendered shell hooks.
 - Modes remain orthogonal to themes.
 - Theme changes must not alter content structure or identity.
-- The current starter themes are `win98`, `macos9`, `cde`, and `msdos`.
+- The visible V2 theme catalog now uses the requested Prompt 2 IDs and keeps unfinished entries honest.
+- The currently selectable visible themes are `win98` and `macos92`.
+- Hidden compatibility themes such as `macos9`, `cde`, and `msdos` may remain in metadata so older stored preferences fail safe.
 - The current modes are `museum`, `practical`, and `safe`.
 - `practical` is the default enhanced presentation.
 - Theme and mode switching are optional enhancements and may persist preferences when storage is available.
