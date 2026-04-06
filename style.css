@@ -128,8 +128,8 @@ a:focus-visible,
 }
 
 .content-area img {
-  width: 100%;
-  height: auto;
-  display: block;    /* Prevents a tiny gap at the bottom of images */
-  margin-bottom: 1em; /* Adds a bit of space between the stacked images */
+  max-width: 100%; /* Only scales down, never up */
+  height: auto;    /* Keeps proportions correct */
+  display: block;  /* Prevents extra spacing below images */
+  margin: 1em 0;   /* Adds some vertical space between images */
 }
