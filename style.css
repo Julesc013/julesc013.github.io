@@ -126,3 +126,10 @@ a:focus-visible,
   border-right: 2px solid var(--light);
   border-bottom: 2px solid var(--light);
 }
+
+.content-area img {
+  width: 100%;
+  height: auto;
+  display: block;    /* Prevents a tiny gap at the bottom of images */
+  margin-bottom: 1em; /* Adds a bit of space between the stacked images */
+}
