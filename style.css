@@ -57,6 +57,13 @@ body::before {
   box-shadow: inset -1px -1px 0 var(--mid), inset 1px 1px 0 var(--light);
 }
 
+.page {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 125vh;   /* fallback */
+  max-width: 125dvh;  /* preferred on modern browsers */
+}
+
 .title-bar {
   padding: 6px 8px;
   background: linear-gradient(to right, var(--title1), var(--title2));
